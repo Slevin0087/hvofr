@@ -1,0 +1,44 @@
+:root {
+   --gap-for-flex: 1em; 
+}
+
+.game-interface {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--gap-for-flex);
+  width: 100%;
+  height: 100%;
+}
+
+.status-bar {
+  width: 100%;
+  color: red;
+  background-color: brown;
+}
+
+.game-container {
+  width: 100%;
+  height: 50%;
+  color: blue;
+  background-color: red;
+}
+
+.blinking-text {
+  width: fit-content;
+  color: black;
+  background-color: blue;
+}
+
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-for-flex);
+}
+
+.controls-btn-container {
+  display: flex;
+  gap: var(--gap-for-flex);
+  justify-content: center;
+}

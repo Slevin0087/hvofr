@@ -1,0 +1,74 @@
+import { NamePage } from "../ui/NamePage.js";
+import { MenuPage } from "../ui/MenuPage.js";
+import { SettingsPage } from "../ui/SettingsPage.js";
+import { GamePage } from "../ui/GamePage.js";
+
+export class UIManager {
+  constructor(eventManager, stateManager) {
+    this.eventManager = eventManager;
+    this.stateManager = stateManager;
+    this.components = {};
+
+    this.init();
+  }
+
+  init() {
+    this.registerComponents();
+    this.hideAll();
+    this.setupEventListeners();
+  }
+
+  registerComponents() {
+    this.components = {
+      namePage: new NamePage(this.eventManager, this.stateManager),
+      menuPage: new MenuPage(this.eventManager),
+      settingsPage: new SettingsPage(this.eventManager, this.stateManager),
+      gamePage: new GamePage(this.eventManager, this.stateManager),
+    };
+  }
+
+  setupEventListeners() {
+    this.eventManager.on("app:start", () => {
+      this.components.namePage.show();
+      this.stateManager.state.ui.activePage = this.components.namePage;
+    });
+    this.eventManager.on("ui:name:hide", () => {
+      this.hideAll(this.components.namePage);
+      this.components.menuPage.show(this.stateManager.state.game.isRunning);
+      this.stateManager.state.ui.activePage = this.components.menuPage;
+    });
+
+    this.eventManager.on("game:new", () => {
+      this.hideAll(this.components.menuPage);
+      this.components.gamePage.show();
+      this.stateManager.state.ui.activePage = this.components.gamePage;
+      this.stateManager.state.game.isRunning = true;
+    });
+
+    this.eventManager.on("ui:menu:show", (activePage) => {
+      console.log("activePage:", activePage);
+      
+      this.hideAll(activePage);
+      this.components.menuPage.show(this.stateManager.state.game.isRunning);
+      this.stateManager.state.ui.activePage = this.components.menuPage;
+    });
+
+    this.eventManager.on("ui:settings:show", () => {
+      this.hideAll(this.components.menuPage);
+      this.components.settingsPage.show();
+      this.stateManager.state.ui.activePage = this.components.settingsPage;
+    });
+  }
+
+  hideAll(arg = null) {
+    console.log("arg:", arg);
+
+    Object.values(this.components).forEach((component) => {
+      if (!arg) component.page.classList.add("hidden");
+      else {
+        if (component === arg) component.hide();
+        else component.page.classList.add("hidden");
+      }
+    });
+  }
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Хусынка</title>
+    <link rel="stylesheet" href="./src/css/style.css">
+    <link rel="stylesheet" href="./src/css/hidden.css">
+    <link rel="stylesheet" href="./src/css/namePage.css">
+    <link rel="stylesheet" href="./src/css/menu.css">
+    <link rel="stylesheet" href="./src/css/gamePage.css">
+    <link rel="stylesheet" href="./src/css/settings.css">
+  </head>
+  <body>
+    <div id="app" class="app-container">
+      <div id="notification-toast" class="toast hidden"></div>
+
+      <button class="full-screen-button" id="full-screen-btn">[ ]</button>
+      <div id="player-page" class="name-page">
+        <form id="player-form" class="player-form">
+          <div class="page-content">
+            <h2 class="name-h2">Введите ваше имя</h2>
+            <input
+              type="text"
+              id="player-name"
+              name="player_name"
+              placeholder="Игрок"
+              maxlength="12"
+              required
+            />
+            <div class="page-buttons">
+              <button type="submit">Начать игру</button>
+              <button type="button" id="skip-name">Пропустить</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Главное меню -->
+      <!-- Меню игры -->
+      <div id="game-menu" class="menu">
+        <h1>Хусынка</h1>
+        <button id="new-game-btn">Новая игра</button>
+        <button id="continue-btn">Продолжить</button>
+        <button id="settings-btn">Настройки</button>
+        <button id="state-player">Статистика</button>
+        <button id="shop-btn">Магазин</button>
+        <button id="exit-btn">Выход</button>
+      </div>
+      <!-- Настройки -->
+      <div id="settings" class="settings">
+        <h2 class="setting-title">Настройки</h2>
+        <div class="setting-item">
+          <label for="music-volume">Громкость:</label>
+          <input type="text" id="music-volume" name="name" />
+          <label for="effects-volume">Эффект звука:</label>
+          <input type="text" id="effects-volume" name="name" />
+          <label class="setting-label"
+            >Звуки: <input type="checkbox" id="sound-toggle" checked
+          /></label>
+        </div>
+        <div class="setting-item">
+          <label
+            >Сложность:
+            <select id="difficulty">
+              <option value="easy">Лёгкая</option>
+              <option value="normal" selected>Обычная</option>
+              <option value="hard">Сложная</option>
+            </select>
+          </label>
+        </div>
+        <button class="settings-back-btn" id="back-to-menu">Назад в меню</button>
+      </div>
+      <!-- Магазин -->
+      <div id="game-interface" class="game-interface">
+        <div class="status-bar info-container" id="info-top">
+          <div id="name-error"></div>
+          <div class="points points-game">
+            <span id="points-in-game">0</span>
+          </div>
+          <div class="timer">Время: <span id="time-display">00:00</span></div>
+        </div>
+        <div class="game-container" id="game-container">
+          <div class="row-1" id="row">
+            <div class="row-a" id="stockDiv">
+              <div class="row-a" id="stockDiv">
+                <div class="stock card-back classic-shirt" id="stock"></div>
+                <div class="card-waste" id="waste"></div>
+              </div>
+            </div>
+            <div class="row-b" id="foundations"></div>
+          </div>
+          <div class="row-2" id="tableaus"></div>
+        </div>
+        <div class="controls-container" id="controls">
+          <span class="blinking-text" id="collect-cards"
+            >Собрать карты</span
+          >
+          <div class="controls-btn-container">
+            <button class="controls-btn" id="new-game">Новая игра</button>
+            <button class="controls-btn" id="hint">Подсказка</button>
+            <button class="controls-btn" id="menu-btn">Меню</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
