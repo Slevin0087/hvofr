@@ -37,6 +37,19 @@
   width: max-content;
 }
 
+.c-setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--gap-vol-control);
+  width: 100%;
+}
+
+.c-setting-item label {
+  border: 0 solid;
+  background: var(--back-color-settings-el);
+}
+
 /* ..................................................... */
 /* ....................................................... */
 .setting-off-in-vol {

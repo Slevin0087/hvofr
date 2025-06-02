@@ -60,7 +60,7 @@
         <div class="setting-item">
           <!-- <label for="music-volume">Громкость:</label>
           <input type="text" id="music-volume" name="name" /> -->
-          <div class="volume-control">
+          <div class="volume-control container-setting-item">
             <label for="music-volume">Громкость:</label>
             <input
               type="range"
@@ -70,28 +70,27 @@
               value="50"
             />
           </div>
-          <div class="setting-off-in-vol">
+          <div class="setting-off-in-vol container-setting-item">
             <!-- <label class="setting-label"
               >Звуки: <input type="checkbox" id="sound-toggle" checked
             /></label> -->
             <label class="span-sound-off-in">Звуки:</label>
-            <label class="setting-label"
-              >
-              <input type="checkbox" id="sound-toggle"/>
+            <label class="setting-label">
+              <input type="checkbox" id="sound-toggle" />
               <span class="slider"></span>
             </label>
           </div>
-        </div>
-        <div class="setting-item">
-          <label
-            >Сложность:
+          <div class="c-setting-item">
+            <label>Сложность: </label>
             <select id="difficulty">
               <option value="easy">Лёгкая</option>
               <option value="normal" selected>Обычная</option>
               <option value="hard">Сложная</option>
             </select>
-          </label>
+          </div>
         </div>
+        <!-- <div class="setting-item"> -->
+        <!-- </div> -->
       </div>
 
       <!-- Магазин -->
