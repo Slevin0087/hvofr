@@ -7,6 +7,7 @@
 }
 
 .player-state {
+  position: relative;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -19,9 +20,9 @@
 }
 
 .player-state button {
-    position: absolute;
-    bottom: var(--btn-pstate-left-bottom);
-    left: var(--btn-pstate-left-bottom);
+  position: absolute;
+  bottom: var(--btn-pstate-left-bottom);
+  left: var(--btn-pstate-left-bottom);
 }
 
 .player-state-head {

@@ -264,6 +264,7 @@ body {
   right: var(--full-screen-button-top-left);
   bottom: var(--full-screen-button-top-left);
   width: var(--full-screen-button-width);
+  z-index: 1;
 }
 
 .app-container {
