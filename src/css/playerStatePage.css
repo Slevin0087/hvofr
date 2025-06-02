@@ -1,0 +1,14 @@
+:root {
+  --gap-for-flex: 1em;
+}
+
+.player-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-for-flex);
+  background-color: rgb(73, 73, 189);
+  width: 100%;
+  height: 100%;
+}

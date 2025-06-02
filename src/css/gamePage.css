@@ -17,7 +17,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  color: red;
+  color: rgb(12, 0, 0);
   background-color: brown;
 }
 
@@ -33,7 +33,12 @@
   background-color: red;
 }
 
-.row-1,
+.row-1 {
+  height: 200px;
+  width: 100%;
+  border: 2px solid black;
+}
+
 .row-2 {
   height: 300px;
   width: 100%;

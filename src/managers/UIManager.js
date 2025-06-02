@@ -3,6 +3,7 @@ import { MenuPage } from "../ui/MenuPage.js";
 import { SettingsPage } from "../ui/SettingsPage.js";
 import { GamePage } from "../ui/GamePage.js";
 import { ShopUI } from "../ui/ShopUI.js";
+import { PlayerStatePage } from "../ui/PlayerStatePage.js";
 
 export class UIManager {
   constructor(eventManager, stateManager) {
@@ -26,6 +27,7 @@ export class UIManager {
       settingsPage: new SettingsPage(this.eventManager, this.stateManager),
       gamePage: new GamePage(this.eventManager, this.stateManager),
       shopPage: new ShopUI(this.eventManager, this.stateManager),
+      playerStatePage: new PlayerStatePage(this.eventManager, this.stateManager),
     };
   }
 
@@ -84,6 +86,12 @@ export class UIManager {
     this.eventManager.on("shop:category:change", (category) => {
       this.stateManager.state.shop.currentCategory = category;
       this.components.shopPage.render();
+    });
+
+    this.eventManager.on("ui:stateplayer:show", (activePage) => {
+      this.hideAll(activePage);
+      this.components.playerStatePage.show();
+      this.stateManager.state.ui.activePage = this.components.playerStatePage;
     });
   }
 

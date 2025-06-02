@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./src/css/gamePage.css" />
     <link rel="stylesheet" href="./src/css/settings.css" />
     <link rel="stylesheet" href="./src/css/shop.css" />
-    <link rel="stylesheet" href="./src/css/gameContainer.css">
+    <link rel="stylesheet" href="./src/css/playerStatePage.css">
   </head>
   <body>
     <div id="app" class="app-container">
@@ -81,7 +81,7 @@
       <!-- Магазин -->
       <div id="shop" class="shop">
         <div class="shop-head">
-          <button id="shop-back">Назад</button>
+          <button class="shop-back-btn" id="shop-back">Назад</button>
           <h2>Магазин</h2>
           <div class="balance">Баланс: <span id="coins">0</span> монет</div>
         </div>
@@ -100,6 +100,12 @@
 
           <div class="all-items-container" id="fon-container"></div>
         </div>
+      </div>
+
+      <!-- Статистика игрока -->
+      <div class="player-state" id="player-state">
+        <button class="btn" id="btn-back-st-player">Назад</button>
+        Статистика игрока:
       </div>
 
       <!-- Game интерфейс -->
