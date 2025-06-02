@@ -27,6 +27,8 @@
   --blinking-text-br: 0.7em;
   --points-game-br: 0.7em;
   --border-radius-btn-input: 0.3em;
+  --full-screen-button-top-left: 1em;
+  --full-screen-button-width: 2.5em;
 }
 
 /**
@@ -259,9 +261,9 @@ body {
 
 .full-screen-button {
   position: absolute;
-  left: 1em;
-  top: 1em;
-  width: 2.5em;
+  left: var(--full-screen-button-top-left);
+  top: var(--full-screen-button-top-left);
+  width: var(--full-screen-button-width);
 }
 
 .app-container {

@@ -4,17 +4,19 @@
   --height-range: 1em;
   --height-width-circle: 2em;
   --border-r-slider: 2em;
+  --padding-top-settings: 1em;
 }
 
 .settings {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   gap: var(--gap-for-flex);
   width: 100%;
   height: 100%;
   background-color: chocolate;
+  padding-top: var(--padding-top-settings);
 }
 
 .setting-title {
