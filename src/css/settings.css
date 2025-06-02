@@ -5,6 +5,8 @@
   --height-width-circle: 2em;
   --border-r-slider: 2em;
   --padding-top-settings: 1em;
+  --gap-for-flex-settings: 1em;
+  --padding-setting-head: 0.5em;
 }
 
 .settings {
@@ -12,11 +14,22 @@
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  gap: var(--gap-for-flex);
+  gap: var(--gap-for-flex-settings);
   width: 100%;
   height: 100%;
   background-color: chocolate;
-  padding-top: var(--padding-top-settings);
+  /* padding-top: var(--padding-top-settings); */
+}
+
+.setting-head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-for-flex-settings);
+  width: 100%;
+  color: black;
+  background-color: brown;
+  padding: var(--padding-setting-head);
 }
 
 .setting-title {

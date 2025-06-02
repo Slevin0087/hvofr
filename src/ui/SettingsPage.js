@@ -59,7 +59,6 @@ export class SettingsPage {
       soundEnabled: this.elements.soundToggle.checked,
       difficulty: this.elements.difficultySelect.value,
       musicVolume: parseFloat(this.elements.musicVolume.value),
-      effectsVolume: parseFloat(this.elements.effectsVolume.value),
     };
 
     this.events.emit("settings:save", newSettings);

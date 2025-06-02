@@ -261,8 +261,8 @@ body {
 
 .full-screen-button {
   position: absolute;
-  left: var(--full-screen-button-top-left);
-  top: var(--full-screen-button-top-left);
+  right: var(--full-screen-button-top-left);
+  bottom: var(--full-screen-button-top-left);
   width: var(--full-screen-button-width);
 }
 

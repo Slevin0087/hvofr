@@ -1,6 +1,6 @@
 :root {
   --gap-for-flex-shop: 1em;
-  --padding-right-head: 0.5em;
+  --padding-shop-head: 0.5em;
   --translateY-btn: 0.1em;
   --btn-active: #3e8e41;
 }
@@ -8,7 +8,7 @@
 .shop {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   gap: var(--gap-for-flex-shop);
   background-color: chocolate;
@@ -17,9 +17,9 @@
 
 .shop-head {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
   align-items: center;
-  padding-right: var(--padding-right-head);
+  padding: var(--padding-shop-head);
   gap: var(--gap-for-flex-shop);
   width: 100%;
   color: black;
