@@ -2,6 +2,7 @@ import { NamePage } from "../ui/NamePage.js";
 import { MenuPage } from "../ui/MenuPage.js";
 import { SettingsPage } from "../ui/SettingsPage.js";
 import { GamePage } from "../ui/GamePage.js";
+import { ShopUI } from "../ui/ShopUI.js";
 
 export class UIManager {
   constructor(eventManager, stateManager) {
@@ -24,6 +25,7 @@ export class UIManager {
       menuPage: new MenuPage(this.eventManager),
       settingsPage: new SettingsPage(this.eventManager, this.stateManager),
       gamePage: new GamePage(this.eventManager, this.stateManager),
+      shopPage: new ShopUI(this.eventManager, this.stateManager),
     };
   }
 
@@ -47,7 +49,7 @@ export class UIManager {
 
     this.eventManager.on("ui:menu:show", (activePage) => {
       console.log("activePage:", activePage);
-      
+
       this.hideAll(activePage);
       this.components.menuPage.show(this.stateManager.state.game.isRunning);
       this.stateManager.state.ui.activePage = this.components.menuPage;
@@ -57,6 +59,31 @@ export class UIManager {
       this.hideAll(this.components.menuPage);
       this.components.settingsPage.show();
       this.stateManager.state.ui.activePage = this.components.settingsPage;
+    });
+
+    this.eventManager.on("game:exit", (activePage) => {
+      this.hideAll(activePage);
+      this.eventManager.emit("game:end");
+      this.components.namePage.show();
+    });
+
+    this.eventManager.on("game:continue", (activePage) => {
+      this.hideAll(activePage);
+      this.components.gamePage.show();
+      this.stateManager.state.ui.activePage = this.components.gamePage;
+      this.stateManager.state.game.isRunning = true;
+    });
+
+    this.eventManager.on("ui:shop:show", (activePage) => {
+      this.hideAll(activePage);
+      this.components.shopPage.show();
+      this.stateManager.state.ui.activePage = this.components.shopPage;
+      this.eventManager.emit("shop:render", this.stateManager.state.shop);
+    });
+
+    this.eventManager.on("shop:category:change", (category) => {
+      this.stateManager.state.shop.currentCategory = category;
+      this.components.shopPage.render();
     });
   }
 

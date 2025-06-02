@@ -7,12 +7,14 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Хусынка</title>
-    <link rel="stylesheet" href="./src/css/style.css">
-    <link rel="stylesheet" href="./src/css/hidden.css">
-    <link rel="stylesheet" href="./src/css/namePage.css">
-    <link rel="stylesheet" href="./src/css/menu.css">
-    <link rel="stylesheet" href="./src/css/gamePage.css">
-    <link rel="stylesheet" href="./src/css/settings.css">
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <link rel="stylesheet" href="./src/css/hidden.css" />
+    <link rel="stylesheet" href="./src/css/namePage.css" />
+    <link rel="stylesheet" href="./src/css/menu.css" />
+    <link rel="stylesheet" href="./src/css/gamePage.css" />
+    <link rel="stylesheet" href="./src/css/settings.css" />
+    <link rel="stylesheet" href="./src/css/shop.css" />
+    <link rel="stylesheet" href="./src/css/gameContainer.css">
   </head>
   <body>
     <div id="app" class="app-container">
@@ -71,9 +73,36 @@
             </select>
           </label>
         </div>
-        <button class="settings-back-btn" id="back-to-menu">Назад в меню</button>
+        <button class="settings-back-btn" id="back-to-menu">
+          Назад в меню
+        </button>
       </div>
+
       <!-- Магазин -->
+      <div id="shop" class="shop">
+        <div class="shop-head">
+          <button id="shop-back">Назад</button>
+          <h2>Магазин</h2>
+          <div class="balance">Баланс: <span id="coins">0</span> монет</div>
+        </div>
+        <div class="choose-container">
+          <button class="btn-card-face btn" id="face-btn">Лицо</button>
+          <button class="btn-card-shirt btn" id="shirt-btn">Рубашка</button>
+          <button class="btn-card-fon btn" id="fon-btn">Фон</button>
+        </div>
+        <!-- <div class="all-items-container" id="face-container"> -->
+        <div class="all-items-container" id="all-items-container">
+          тут будут стили лицо карт
+
+          <div class="all-items-container" id="face-container"></div>
+
+          <div class="all-items-container" id="shirt-container"></div>
+
+          <div class="all-items-container" id="fon-container"></div>
+        </div>
+      </div>
+
+      <!-- Game интерфейс -->
       <div id="game-interface" class="game-interface">
         <div class="status-bar info-container" id="info-top">
           <div id="name-error"></div>
@@ -84,22 +113,23 @@
         </div>
         <div class="game-container" id="game-container">
           <div class="row-1" id="row">
-            <div class="row-a" id="stockDiv">
               <div class="row-a" id="stockDiv">
                 <div class="stock card-back classic-shirt" id="stock"></div>
                 <div class="card-waste" id="waste"></div>
               </div>
-            </div>
-            <div class="row-b" id="foundations"></div>
+            <div class="row-b" id="foundationsDiv"></div>
           </div>
-          <div class="row-2" id="tableaus"></div>
+          <div class="row-2" id="tableausDiv"></div>
         </div>
         <div class="controls-container" id="controls">
-          <span class="blinking-text" id="collect-cards"
-            >Собрать карты</span
-          >
+          <span class="blinking-text" id="collect-cards">Собрать карты</span>
           <div class="controls-btn-container">
-            <button class="controls-btn" id="new-game">Новая игра</button>
+            <button id="undo-btn" class="btn" aria-label="Отменить ход">
+              Отмена
+            </button>
+            <button class="controls-btn" id="new-game-ctr-btn">
+              Новая игра
+            </button>
             <button class="controls-btn" id="hint">Подсказка</button>
             <button class="controls-btn" id="menu-btn">Меню</button>
           </div>

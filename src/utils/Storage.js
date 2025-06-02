@@ -40,7 +40,7 @@ export class Storage {
     return (
       JSON.parse(localStorage.getItem("playerData")) || {
         name: "Игрок",
-        coins: 500,
+        coins: 0,
       }
     );
   }

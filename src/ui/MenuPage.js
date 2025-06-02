@@ -30,10 +30,11 @@ export class MenuPage {
   setupEventListeners() {
     this.elements.newGameBtn.addEventListener("click", () => {
       this.events.emit("game:new");
+      this.events.emit("game:start");
     });
 
     this.elements.continueBtn.addEventListener("click", () => {
-      this.events.emit("game:continue");
+      this.events.emit("game:continue", this);
     });
 
     this.elements.settingsBtn.addEventListener("click", () => {
@@ -45,11 +46,11 @@ export class MenuPage {
     });
 
     this.elements.shopBtn.addEventListener("click", () => {
-      this.events.emit("ui:shop:show");
+      this.events.emit("ui:shop:show", this);
     });
 
     this.elements.exitBtn.addEventListener("click", () => {
-      this.events.emit("game:exit");
+      this.events.emit("game:exit", this);
     });
   }
 

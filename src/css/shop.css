@@ -1,0 +1,38 @@
+:root {
+  --gap-for-flex-shop: 1em;
+  --padding-right-head: 0.5em;
+  --translateY-btn: 0.1em;
+}
+
+.shop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-for-flex-shop);
+  background-color: chocolate;
+  min-height: 100%;
+}
+
+.shop-head {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding-right: var(--padding-right-head);
+  gap: var(--gap-for-flex-shop);
+  width: 100%;
+  color: black;
+  background-color: brown;
+}
+
+.all-items-container {
+  color: black;
+  background-color: coral;
+}
+
+.active-shop-btn {
+  background-color: #3e8e41;
+  transform: translateY(var(--translateY-btn));
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+

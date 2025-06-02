@@ -10,6 +10,7 @@ export class GamePage {
       messageEl: document.getElementById("message"),
       scoreEl: document.getElementById("points-in-game"),
       timeEl: document.getElementById("time-display"),
+      newGameBtn: document.getElementById("new-game-ctr-btn"),
       hintBtn: document.getElementById("hint"),
       menuBtn: document.getElementById("menu-btn"),
       collectBtn: document.getElementById("collect-cards"),
@@ -30,6 +31,10 @@ export class GamePage {
   }
 
   setupEventListeners() {
+    this.elements.newGameBtn.addEventListener("click", () => {
+      this.events.emit("game:new");
+    });
+
     this.elements.hintBtn.addEventListener("click", () => {
       this.events.emit("hint:request");
     });

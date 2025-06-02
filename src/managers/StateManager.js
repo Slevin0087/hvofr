@@ -1,9 +1,11 @@
 import { Storage } from "../utils/Storage.js";
+import { Validator } from "../utils/Validator.js";
 
 export class StateManager {
   constructor(eventManager) {
     this.events = eventManager;
     this.storage = new Storage();
+    this.validator = new Validator();
     this.state = this.getInitialState();
 
     this.init();
@@ -31,7 +33,7 @@ export class StateManager {
       },
       player: {
         name: "Игрок",
-        coins: 500,
+        coins: 0,
         stats: {
           wins: 0,
           losses: 0,
@@ -124,6 +126,9 @@ export class StateManager {
     });
 
     // Другие обработчики событий...
+    this.events.on("game:exit", (activePage) => {
+      this.state.ui.activePage = activePage;
+    });
   }
 
   saveAllData() {
