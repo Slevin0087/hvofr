@@ -33,16 +33,16 @@ export class AudioManager {
 
   preloadSounds() {
     // Основные звуковые эффекты
-    this.addSound("click", "./assets/sounds/click.mp3");
-    this.addSound("cardFlip", "./assets/sounds/card-flip.mp3");
-    // this.addSound("cardMove", "./assets/sounds/card-move.mp3");
-    this.addSound("win", "./assets/sounds/win.mp3");
-    this.addSound("info", "./assets/sounds/info.mp3");
-    // this.addSound("error", "./assets/sounds/error.mp3");
+    this.addSound("click", "./src/assets/sounds/click.mp3");
+    this.addSound("cardFlip", "./src/assets/sounds/card-flip.mp3");
+    // this.addSound("cardMove", "./src/assets/sounds/card-move.mp3");
+    this.addSound("win", "./src/assets/sounds/win.mp3");
+    this.addSound("info", "./src/assets/sounds/info.mp3");
+    // this.addSound("error", "./src/assets/sounds/error.mp3");
 
     // Фоновая музыка
     this.backgroundMusic = this.createAudio(
-      "assets/sounds/background.mp3",
+      "./src/assets/sounds/background.mp3",
       true
     );
     this.backgroundMusic.volume = this.settings.musicVolume;
@@ -54,6 +54,8 @@ export class AudioManager {
 
   createAudio(path, loop = false) {
     const audio = new Audio(path);
+    console.log('audio:', audio);
+    
     audio.loop = loop;
     audio.preload = "auto";
     return audio;

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./src/css/gamePage.css" />
     <link rel="stylesheet" href="./src/css/settings.css" />
     <link rel="stylesheet" href="./src/css/shop.css" />
-    <link rel="stylesheet" href="./src/css/playerStatePage.css">
+    <link rel="stylesheet" href="./src/css/playerStatePage.css" />
   </head>
   <body>
     <div id="app" class="app-container">
@@ -53,15 +53,33 @@
       </div>
       <!-- Настройки -->
       <div id="settings" class="settings">
+        <button class="settings-back-btn" id="back-to-menu">
+          Назад в меню
+        </button>
         <h2 class="setting-title">Настройки</h2>
         <div class="setting-item">
-          <label for="music-volume">Громкость:</label>
-          <input type="text" id="music-volume" name="name" />
+          <!-- <label for="music-volume">Громкость:</label>
+          <input type="text" id="music-volume" name="name" /> -->
+          <div class="volume-control">
+            <label for="music-volume">Громкость:</label>
+            <input
+              type="range"
+              id="music-volume"
+              min="0"
+              max="100"
+              value="50"
+            />
+          </div>
           <label for="effects-volume">Эффект звука:</label>
           <input type="text" id="effects-volume" name="name" />
           <label class="setting-label"
             >Звуки: <input type="checkbox" id="sound-toggle" checked
           /></label>
+          <label class="switch"
+            >лабел
+            <input type="checkbox" />
+            <span class="slider">спан</span>
+          </label>
         </div>
         <div class="setting-item">
           <label
@@ -73,9 +91,6 @@
             </select>
           </label>
         </div>
-        <button class="settings-back-btn" id="back-to-menu">
-          Назад в меню
-        </button>
       </div>
 
       <!-- Магазин -->
@@ -119,10 +134,10 @@
         </div>
         <div class="game-container" id="game-container">
           <div class="row-1" id="row">
-              <div class="row-a" id="stockDiv">
-                <div class="stock card-back classic-shirt" id="stock"></div>
-                <div class="card-waste" id="waste"></div>
-              </div>
+            <div class="row-a" id="stockDiv">
+              <div class="stock card-back classic-shirt" id="stock"></div>
+              <div class="card-waste" id="waste"></div>
+            </div>
             <div class="row-b" id="foundationsDiv"></div>
           </div>
           <div class="row-2" id="tableausDiv"></div>
