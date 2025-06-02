@@ -34,3 +34,13 @@
   display: flex;
   gap: 10px;
 }
+
+@media (min-width: 350px) {
+  .menu button {
+    font-size: 1.7em;
+  }
+
+  .menu h1 {
+    font-size: 3.5em;
+  }
+}

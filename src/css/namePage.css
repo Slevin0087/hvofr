@@ -21,3 +21,9 @@
     justify-content: center;
     gap: var(--gap-name-page-content);
 }
+
+@media (min-width: 350px) {
+  .name-page {
+    font-size: 1.5em;
+  }
+}
