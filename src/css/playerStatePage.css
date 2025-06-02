@@ -4,6 +4,7 @@
   --gap-for-pstate-head: 1em;
   --padding-psate-head: 0.5em;
   --btn-pstate-left-bottom: 1em;
+  --font-size-ps-350px: 1.3em;
 }
 
 .player-state {
@@ -34,4 +35,10 @@
   color: black;
   background-color: brown;
   padding: var(--padding-psate-head);
+}
+
+@media (min-width: 350px) {
+  .player-state button {
+    font-size: var(--font-size-ps-350px);
+  }
 }

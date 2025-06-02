@@ -3,6 +3,7 @@
   --padding-shop-head: 0.5em;
   --translateY-btn: 0.1em;
   --btn-active: #3e8e41;
+  --font-size-shop-350px: 1.1em;
 }
 
 .shop {
@@ -41,3 +42,8 @@
   background-color: var(--btn-active);
 }
 
+@media (min-width: 350px) {
+  .shop-head button {
+    font-size: var(--font-size-shop-350px);
+  }
+}
