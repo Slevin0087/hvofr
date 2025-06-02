@@ -3,6 +3,7 @@
   --padding-top-p-state: 1em;
   --gap-for-pstate-head: 1em;
   --padding-psate-head: 0.5em;
+  --btn-pstate-left-bottom: 1em;
 }
 
 .player-state {
@@ -17,9 +18,15 @@
   /* padding-top: var(--padding-top-p-state); */
 }
 
+.player-state button {
+    position: absolute;
+    bottom: var(--btn-pstate-left-bottom);
+    left: var(--btn-pstate-left-bottom);
+}
+
 .player-state-head {
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   gap: var(--gap-for-pstate-head);
   width: 100%;

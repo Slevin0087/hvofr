@@ -7,6 +7,7 @@
   --padding-top-settings: 1em;
   --gap-for-flex-settings: 1em;
   --padding-setting-head: 0.5em;
+  --btn-settings-left-bottom: 1em;
 }
 
 .settings {
@@ -21,9 +22,15 @@
   /* padding-top: var(--padding-top-settings); */
 }
 
+.settings button {
+  position: absolute;
+  bottom: var(--btn-settings-left-bottom);
+  left: var(--btn-settings-left-bottom);
+}
+
 .setting-head {
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   gap: var(--gap-for-flex-settings);
   width: 100%;
