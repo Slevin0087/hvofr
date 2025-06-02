@@ -66,7 +66,7 @@ export class GamePage {
   }
 
   updateScore(score) {
-    this.elements.scoreEl.textContent = `Очки: ${score}`;
+    this.elements.scoreEl.textContent = `🌟: ${score}`;
   }
 
   updateTime(time) {

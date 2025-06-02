@@ -28,8 +28,6 @@ export class Game {
   }
 
   init() {
-    console.log("tableaus:", tableaus);
-
     this.systems.logic.setupNewGame(this.deck, this.tableaus, this.stock);
     this.systems.render.renderGame(
       this.deck,

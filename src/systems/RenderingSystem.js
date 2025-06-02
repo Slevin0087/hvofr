@@ -38,20 +38,20 @@ export class RenderingSystem {
 //   }
 
   // изначально
-  renderCard(card, containerId, offset) {
-    const cardElement = this.createCardElement(card);
-    const container = this.getCachedElement(containerId);
+  // renderCard(card, containerId, offset) {
+  //   const cardElement = this.createCardElement(card);
+  //   const container = this.getCachedElement(containerId);
 
-    if (!container) return;
+  //   if (!container) return;
 
-    this.setCardPosition(cardElement, container, offset);
-    this.setCardStyles(cardElement, card);
-    this.setupCardEventListeners(cardElement, card);
+  //   this.setCardPosition(cardElement, container, offset);
+  //   this.setCardStyles(cardElement, card);
+  //   this.setupCardEventListeners(cardElement, card);
 
-    container.appendChild(cardElement);
-    card.parentElement = container;
-    card.cardEl = cardElement;
-  }
+  //   container.appendChild(cardElement);
+  //   card.parentElement = container;
+  //   card.cardEl = cardElement;
+  // }
 
   // Остальные методы рендеринга...
 
@@ -64,13 +64,13 @@ export class RenderingSystem {
     this.events.on("ui:theme:change", (theme) => this.applyTheme(theme));
   }
 
-  setupGameArea() {
-    // Создаем DOM элементы для игровых зон
-    this.createFoundations();
-    this.createTableaus();
-    this.createStockAndWaste();
-    this.applyTheme(this.state.state.settings.theme);
-  }
+  // setupGameArea() {
+  //   // Создаем DOM элементы для игровых зон
+  //   this.createFoundations();
+  //   this.createTableaus();
+  //   this.createStockAndWaste();
+  //   this.applyTheme(this.state.state.settings.theme);
+  // }
 
   createFoundations() {
     this.domElements.foundationsContainer.innerHTML = "";
@@ -142,6 +142,7 @@ export class RenderingSystem {
   }
 
   renderCards() {
+    
     // Очищаем старые карты
     document.querySelectorAll(".card").forEach((el) => el.remove());
     // Рендерим карты в tableau
@@ -153,7 +154,7 @@ export class RenderingSystem {
     // Устанавливаем стили для stock добавив класс
     this.renderStockElement();
   }
-
+  
   renderCardsForFoundation() {
     this.foundations.forEach((foundation, i) => {
       if (foundation.cards.length > 0) {
@@ -162,14 +163,14 @@ export class RenderingSystem {
       }
     });
   }
-
+  
   renderCardsForTableau() {
     this.tableaus.forEach((tableau, i) => {
+      console.log('renderCardssssssssss', tableau);
       tableau.cards.forEach((card, j) => {
         this.renderCard(card, `tableau-${i}`, j);
       });
     });
-    console.log("this.faceDownCArds:", this.faceDownCArds)
   }
 
   renderCardsForWaste() {
@@ -211,7 +212,7 @@ export class RenderingSystem {
     }
 
     stockElement.classList.remove("empty");
-    stockElement.className = "stock " + this.state.settings.cardBack;
+    stockElement.className = "stock " + this.state.state.settings.cardBack;
   }
 
   renderWaste() {
@@ -257,6 +258,8 @@ export class RenderingSystem {
 
   // после
   renderCard(card, containerId, offset = 0) {
+    console.log('renderCardddddddddddddddddddd');
+    
     const container = document.getElementById(containerId);
     if (!container) return;
 
@@ -292,9 +295,9 @@ export class RenderingSystem {
 
     // Настройка рубашки/лица
     if (!card.faceUp) {
-      cardElement.classList.add("face-down", this.state.settings.cardBack);
+      cardElement.classList.add("face-down", this.state.state.settings.cardBack);
     } else {
-      cardElement.classList.add(this.state.settings.cardFace);
+      cardElement.classList.add(this.state.state.settings.cardFace);
     }
 
     // Позиционирование
@@ -383,8 +386,8 @@ export class RenderingSystem {
       element: cardElement,
       duration: UIConfig.animations.cardFlipDuration,
       onComplete: () => {
-        cardElement.classList.remove("face-down", this.state.settings.cardBack);
-        cardElement.classList.add(this.state.settings.cardFace);
+        cardElement.classList.remove("face-down", this.state.state.settings.cardBack);
+        cardElement.classList.add(this.state.state.settings.cardFace);
         this.addCardEventListeners(cardElement, card);
       },
     });

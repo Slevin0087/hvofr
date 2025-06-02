@@ -53,9 +53,7 @@ export class AudioManager {
   }
 
   createAudio(path, loop = false) {
-    const audio = new Audio(path);
-    console.log('audio:', audio);
-    
+    const audio = new Audio(path);    
     audio.loop = loop;
     audio.preload = "auto";
     return audio;

@@ -48,6 +48,8 @@ export class GameLogicSystem {
   }
 
   setupNewGame(deck, tableaus, stock) {
+    console.log('setupNewGame');
+    
     // deck = new Deck();
     deck.shuffle();
 
