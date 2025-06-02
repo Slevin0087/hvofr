@@ -7,6 +7,8 @@ import { Game } from "./core/Game.js";
 const volumeSlider = document.getElementById('music-volume');
 
 volumeSlider.addEventListener('input', function() {
+    console.log('this.style:', this.style);
+    console.log('this.value:', this.value);
   this.style.setProperty('--fill-percent', `${this.value}%`);
 });
 
@@ -40,6 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("после запуска");
   // Для отладки
   // window.app = app;
-
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
 volumeSlider.style.setProperty('--fill-percent', `${volumeSlider.value}%`);
 });

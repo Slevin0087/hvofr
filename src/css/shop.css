@@ -43,7 +43,7 @@
 }
 
 @media (min-width: 350px) {
-  .shop-head button {
+  .shop button {
     font-size: var(--font-size-shop-350px);
   }
 }
