@@ -1,3 +1,8 @@
+:root {
+  --font-size-menu-btn-350px: 1.7em;
+  --font-size-menu-h1-350px: 3.5em;
+}
+
 .menu {
   width: 100%;
   height: 100%;
@@ -37,10 +42,11 @@
 
 @media (min-width: 350px) {
   .menu button {
-    font-size: 1.7em;
+    font-size: var(--font-size-menu-btn-350px);
+    padding: 0.7em;
   }
 
   .menu h1 {
-    font-size: 3.5em;
+    font-size: var(--font-size-menu-h1-350px);
   }
 }
