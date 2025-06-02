@@ -11,7 +11,6 @@ export class SettingsPage {
       soundToggle: document.getElementById("sound-toggle"),
       difficultySelect: document.getElementById("difficulty"),
       musicVolume: document.getElementById("music-volume"),
-      effectsVolume: document.getElementById("effects-volume"),
     };
 
     this.initialize();
@@ -45,10 +44,6 @@ export class SettingsPage {
     this.elements.musicVolume.addEventListener("input", (e) => {
       this.events.emit("settings:music:volume", parseFloat(e.target.value));
     });
-
-    this.elements.effectsVolume.addEventListener("input", (e) => {
-      this.events.emit("settings:effects:volume", parseFloat(e.target.value));
-    });
   }
 
   loadSettings() {
@@ -57,7 +52,6 @@ export class SettingsPage {
     this.elements.soundToggle.checked = settings.soundEnabled;
     this.elements.difficultySelect.value = settings.difficulty;
     this.elements.musicVolume.value = settings.musicVolume;
-    this.elements.effectsVolume.value = settings.effectsVolume;
   }
 
   saveSettings() {
