@@ -19,7 +19,7 @@
 
 .player-state-head {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   gap: var(--gap-for-pstate-head);
   width: 100%;
