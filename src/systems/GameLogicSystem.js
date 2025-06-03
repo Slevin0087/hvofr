@@ -1,4 +1,5 @@
 import { GameEvents } from "../utils/Constants.js";
+import { Game } from "../core/Game.js";
 
 export class GameLogicSystem {
   constructor(stateManager, eventManager, audioManager) {
@@ -14,28 +15,33 @@ export class GameLogicSystem {
   }
 
   // после
-  // handleCardClick(card) {
-  //   if (!card.faceUp || this.state.game.isPaused) return;
+  handleCardClick(card) {
+    console.log("в handleCardClick");
+    console.log('this.state:', this.state);
+    
 
-  //   // Проверяем можно ли переместить карту в foundation
-  //   for (let i = 0; i < this.state.game.foundations.length; i++) {
-  //     if (this.state.game.foundations[i].canAccept(card)) {
-  //       this.events.emit("card:to:foundation", { card, foundationIndex: i });
-  //       return;
-  //     }
-  //   }
+    this.audio.play("click");
+    if (!card.faceUp || this.state.game.isPaused) return;
 
-  //   // Если нет - проверяем tableau
-  //   for (let i = 0; i < this.state.game.tableaus.length; i++) {
-  //     if (this.state.game.tableaus[i].canAccept(card)) {
-  //       this.events.emit("card:to:tableau", { card, tableauIndex: i });
-  //       return;
-  //     }
-  //   }
+    // Проверяем можно ли переместить карту в foundation
+    for (let i = 0; i < this.state.game.foundations.length; i++) {
+      if (this.state.game.foundations[i].canAccept(card)) {
+        this.events.emit("card:to:foundation", { card, foundationIndex: i });
+        return;
+      }
+    }
 
-  //   // Если карту нельзя переместить - звуковой сигнал
-  //   this.audio.play("error");
-  // }
+    // Если нет - проверяем tableau
+    for (let i = 0; i < this.state.game.tableaus.length; i++) {
+      if (this.state.game.tableaus[i].canAccept(card)) {
+        this.events.emit("card:to:tableau", { card, tableauIndex: i });
+        return;
+      }
+    }
+
+    // Если карту нельзя переместить - звуковой сигнал
+    this.audio.play("error");
+  }
 
   setupEventListeners() {
     this.events.on(GameEvents.CARD_CLICK, (card) => this.handleCardClick(card));
@@ -48,10 +54,9 @@ export class GameLogicSystem {
   }
 
   setupNewGame(deck, tableaus, stock) {
-    console.log('setupNewGame');
-    console.log('deck, tableaus, stock:', deck, tableaus, stock);
-    
-    
+    console.log("setupNewGame");
+    console.log("deck, tableaus, stock:", deck, tableaus, stock);
+
     // deck = new Deck();
     deck.shuffle();
 
@@ -83,34 +88,34 @@ export class GameLogicSystem {
   }
 
   // изначально
-  handleCardClick(card, foundations, tableaus) {
-    console.log('в handleCardClick');
-    
-    this.audio.play("click");
+  // handleCardClick(card, foundations, tableaus) {
+  //   console.log('в handleCardClick');
 
-    // Проверка foundation
-    for (let i = 0; i < foundations.length; i++) {
-      if (foundations[i].canAccept(card)) {
-        this.moveCardToFoundation(card, i, foundations, tableaus);
-        this.updateScore(10);
-        if (this.checkWin(foundations)) {
-          this.events.emit("game:win");
-        }
-        return;
-      }
-    }
+  //   this.audio.play("click");
 
-    // Проверка tableau
-    for (let i = 0; i < tableaus.length; i++) {
-      if (tableaus[i].canAccept(card)) {
-        this.moveCardToTableau(card, i, tableaus);
-        this.updateScore(5);
-        return;
-      }
-    }
+  //   // Проверка foundation
+  //   for (let i = 0; i < foundations.length; i++) {
+  //     if (foundations[i].canAccept(card)) {
+  //       this.moveCardToFoundation(card, i, foundations, tableaus);
+  //       this.updateScore(10);
+  //       if (this.checkWin(foundations)) {
+  //         this.events.emit("game:win");
+  //       }
+  //       return;
+  //     }
+  //   }
 
-    this.events.emit("game:invalid:move");
-  }
+  //   // Проверка tableau
+  //   for (let i = 0; i < tableaus.length; i++) {
+  //     if (tableaus[i].canAccept(card)) {
+  //       this.moveCardToTableau(card, i, tableaus);
+  //       this.updateScore(5);
+  //       return;
+  //     }
+  //   }
+
+  //   this.events.emit("game:invalid:move");
+  // }
 
   // изначально
   moveCardToFoundation(card, foundationIndex, foundations, tableaus) {

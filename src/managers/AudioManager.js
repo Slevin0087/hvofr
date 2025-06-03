@@ -28,6 +28,10 @@ export class AudioManager {
   }
 
   saveSettings() {
+    console.log('в saveSettings аудио');
+    console.log('аудио this.settings:', this.settings);
+    
+    
     localStorage.setItem("audioSettings", JSON.stringify(this.settings));
   }
 
@@ -125,7 +129,7 @@ export class AudioManager {
     }
   }
 
-  toggleAllSounds(enabled) {
+  toggleAllSounds(enabled) {    
     this.settings.soundEnabled = enabled;
     if (enabled) {
       this.resumeMusic();

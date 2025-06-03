@@ -26,7 +26,7 @@ export const GameEvents = {
   GAME_WIN: "game:win",
   GAME_MOVE: "game:move",
   GAME_OVER: "game:over",
-  CARD_CLICK: "card:click",
+  CARD_CLICK: "card:clicked",
   CARD_FLIP: "card:flip",
   SCORE_UPDATE: "game:score:update",
   TIME_UPDATE: "game:time:update",

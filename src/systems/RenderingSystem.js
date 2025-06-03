@@ -345,17 +345,17 @@ export class RenderingSystem {
     });
 
     // Добавляем обработчики для drag and drop
-    cardElement.addEventListener("mousedown", (e) => {
-      this.handleDragStart(e, card, cardElement);
-    });
+    // cardElement.addEventListener("mousedown", (e) => {
+    //   this.handleDragStart(e, card, cardElement);
+    // });
 
-    cardElement.addEventListener(
-      "touchstart",
-      (e) => {
-        this.handleDragStart(e, card, cardElement);
-      },
-      { passive: true }
-    );
+    // cardElement.addEventListener(
+    //   "touchstart",
+    //   (e) => {
+    //     this.handleDragStart(e, card, cardElement);
+    //   },
+    //   { passive: true }
+    // );
   }
 
   handleDragStart(e, card, cardElement) {

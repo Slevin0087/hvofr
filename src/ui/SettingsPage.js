@@ -49,6 +49,8 @@ export class SettingsPage {
   }
 
   loadSettings() {
+    console.log('loaaaaaaaaaaaaaaaaaad', this.state.state.settings);
+    
     const settings = this.state.state.settings;
 
     this.elements.soundToggle.checked = settings.soundEnabled;
