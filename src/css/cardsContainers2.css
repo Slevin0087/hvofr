@@ -3,23 +3,31 @@
   /* --card-overlap: 3vw; Перекрытие карт в tableau */
   --card-overlap: calc(var(--card-height) * 0.3);
   --gap: 0.1vw; /* Отступы между элементами */
-  --gap-row1: 16vw;
-  --border-c: 0.2em;
+  --border-c: 0.5vw;
   --padding-c: 0.5vw;
   /* --card-width: 14vw; Базовая ширина карты */
   --card-width: calc((100vw - (var(--padding-c) * 2)) / 7 - (var(--gap) * 6));
   --card-height: calc(var(--card-width) * 1.4); /* Высота (1.4 от ширины) */
+  --gap-row1: calc(var(--card-width) + var(--gap) * 2);
 }
 
 /* Контейнер игры */
 .game-container {
   width: 100vw;
-  height: 40vh;
   display: flex;
   flex-direction: column;
   padding: var(--padding-c);
   box-sizing: border-box;
   justify-content: center;
+}
+
+.foundation {
+    text-align: center;
+}
+
+.foundation-span{
+    /* position: absolute; */
+    font-size: 100px;
 }
 
 /* Общий стиль для всех контейнеров */
@@ -30,6 +38,7 @@
   position: relative;
   width: var(--card-width);
   height: var(--card-height);
+  text-align: center;
   /* Убираем border из контейнера! */
 }
 
@@ -50,12 +59,13 @@
 }
 
 /* Стопки для сбора карт (фонды) */
+.row-a,
 .row-b {
   display: flex;
-  gap: var(--gap);
 }
 
 .stock,
+.row-a,
 .row-b {
   gap: var(--gap);
 }
@@ -74,12 +84,6 @@
   gap: var(--gap-row1);
   margin-bottom: 3vh;
   justify-content: center;
-}
-
-/* Колода и стопка сброса */
-.row-a {
-  display: flex;
-  gap: var(--gap);
 }
 
 /* Стиль для карт в стопках */

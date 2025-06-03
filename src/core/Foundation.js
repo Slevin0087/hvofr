@@ -10,8 +10,12 @@ export class Foundation {
 
   createFoundationElement() {
     const element = document.createElement("div");
+    const span = document.createElement("span");
     element.className = "foundation";
     element.id = `foundation-${this.index}`;
+    span.textContent = "A";
+    span.classList.add('foundation-span');
+    element.appendChild(span);
 
     // element.style.left = 290 + this.index * 90 + "px";
     // element.style.top = "20px";
