@@ -185,8 +185,21 @@ label {
 }
 
 button {
-  color: black;
+  color: black !important; /* Приоритет над системными стилями */
+  -webkit-tap-highlight-color: transparent; /* Убирает синюю подсветку */
+  text-emphasis-color: black; /* Для Safari */
+  -webkit-text-fill-color: black; /* Для старых версий */
+  appearance: none; /* Отключает системные стили */
 }
+
+/* Для состояний: наведение, фокус, активность */
+button:hover,
+button:focus,
+button:active {
+  color: black !important;
+  -webkit-text-fill-color: black;
+}
+
 /**
   Приводим к единому цвету svg-элементы
   (за исключением тех, у которых уже указан
