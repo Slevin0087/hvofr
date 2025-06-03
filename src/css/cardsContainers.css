@@ -22,12 +22,20 @@
 }
 
 .foundation {
-    text-align: center;
+  background-color: rgba(192, 192, 192, 0.411);
 }
 
-.foundation-span{
-    /* position: absolute; */
-    font-size: var(--card-width);
+/* .stock-span {
+  font-size: 70px;
+} */
+
+.foundation-span {
+  font-size: var(--card-width);
+}
+
+.stock,
+.card-waste {
+  background-color: rgba(192, 192, 192, 0.411);
 }
 
 /* Общий стиль для всех контейнеров */
@@ -64,7 +72,6 @@
   display: flex;
 }
 
-.stock,
 .row-a,
 .row-b {
   gap: var(--gap);
