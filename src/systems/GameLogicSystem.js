@@ -84,6 +84,8 @@ export class GameLogicSystem {
 
   // изначально
   handleCardClick(card, foundations, tableaus) {
+    console.log('в handleCardClick');
+    
     this.audio.play("click");
 
     // Проверка foundation

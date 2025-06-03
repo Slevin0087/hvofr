@@ -19,7 +19,7 @@ class App {
     this.stateManager = new StateManager(this.eventManager);
     this.uiManager = new UIManager(this.eventManager, this.stateManager);
     this.audioManager = new AudioManager(this.eventManager);
-    this.gameManager = new GameManager(this.stateManager, this.eventManager);
+    this.gameManager = new GameManager(this.stateManager, this.eventManager, this.audioManager);
     this.game = new Game(
       this.stateManager,
       this.eventManager,

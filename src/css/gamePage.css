@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   width: 100%;
   color: rgb(12, 0, 0);
   background-color: brown;
@@ -85,8 +85,8 @@
     font-size: 2.4em;
   }
   .controls-btn-container button {
-    background-color: rgba(255, 255, 255, 0);
-    border: 0.1em solid yellow;
+    /* background-color: rgba(255, 255, 255, 0); */
+    border: 0.1em solid rgb(128, 98, 0);
     padding: 0;
   }
 }

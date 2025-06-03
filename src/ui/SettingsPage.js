@@ -34,6 +34,8 @@ export class SettingsPage {
     });
 
     this.elements.soundToggle.addEventListener("change", (e) => {
+      console.log('soundToggle e.target.checked:', e.target.checked);
+      
       this.events.emit("settings:sound:toggle", e.target.checked);
     });
 

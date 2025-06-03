@@ -1,9 +1,10 @@
 import { Game } from "../core/Game.js";
 
 export class GameManager {
-  constructor(stateManager, eventManager) {
+  constructor(stateManager, eventManager, audioManager) {
     this.state = stateManager;
     this.events = eventManager;
+    this.audio = audioManager;
     this.lastTime = 0;
     this.initialize();
   }
@@ -14,7 +15,9 @@ export class GameManager {
   }
 
   setupEventListeners() {
+    
     this.events.on("game:new", () => {
+      console.log('в обработчик this.audio', this.audio);
       this.state.currentGame = new Game(this.state, this.events, this.audio);
       this.state.currentGame.init();
     });

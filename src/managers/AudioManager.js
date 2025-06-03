@@ -53,7 +53,7 @@ export class AudioManager {
   }
 
   createAudio(path, loop = false) {
-    const audio = new Audio(path);    
+    const audio = new Audio(path);
     audio.loop = loop;
     audio.preload = "auto";
     return audio;
@@ -69,6 +69,9 @@ export class AudioManager {
     this.eventManager.on("effects:volume", (volume) =>
       this.setEffectsVolume(volume)
     );
+
+    this.eventManager.on("settings:sound:toggle", (enabled) => this.toggleAllSounds(enabled));
+    this.eventManager.on("game:started", () => this.playMusic());
     this.eventManager.on("game:pause", () => this.pauseMusic());
     this.eventManager.on("game:resume", () => this.resumeMusic());
   }
