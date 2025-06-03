@@ -27,7 +27,7 @@
 
 .foundation-span{
     /* position: absolute; */
-    font-size: 44px;
+    font-size: var(--card-width);
 }
 
 /* Общий стиль для всех контейнеров */
