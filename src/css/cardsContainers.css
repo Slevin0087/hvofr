@@ -1,33 +1,82 @@
 :root {
-  --card-width: 10vw; /* Базовая ширина карты */
-  --card-height: 14vw; /* Высота (1.4 от ширины) */
   --card-radius: 0.5vw; /* Скругление углов */
-  --card-overlap: 3vw; /* Перекрытие карт в tableau */
-  --gap: 1vw; /* Отступы между элементами */
-  --gap-row1: 25vw;
-  --border-r-c: 0.2em;
+  /* --card-overlap: 3vw; Перекрытие карт в tableau */
+  --card-overlap: calc(var(--card-height) * 0.3);
+  --gap: 0.1vw; /* Отступы между элементами */
+  --border-c: 0.5vw;
+  --padding-c: 0.5vw;
+  /* --card-width: 14vw; Базовая ширина карты */
+  --card-width: calc((100vw - (var(--padding-c) * 2)) / 7 - (var(--gap) * 6));
+  --card-height: calc(var(--card-width) * 1.4); /* Высота (1.4 от ширины) */
+  --gap-row1: calc(var(--card-width) + var(--gap) * 2);
 }
 
 /* Контейнер игры */
 .game-container {
   width: 100vw;
-  height: 40vh;
   display: flex;
   flex-direction: column;
-  padding: 2vh;
+  padding: var(--padding-c);
   box-sizing: border-box;
-  border: var(--border-r-c) solid yellow;
   justify-content: center;
 }
 
-/* Общие стили для всех карт */
-.card {
+.foundation {
+    text-align: center;
+}
+
+.foundation-span{
+    /* position: absolute; */
+    font-size: var(--card-width);
+}
+
+/* Общий стиль для всех контейнеров */
+.stock,
+.foundation,
+.card-waste,
+.card-placeholder {
+  position: relative;
   width: var(--card-width);
   height: var(--card-height);
-  border-radius: var(--card-radius);
+  text-align: center;
+  /* Убираем border из контейнера! */
+}
+
+/* Переносим border на псевдоэлемент (не влияет на позиционирование карт) */
+.stock::before,
+.foundation::before,
+.card-waste::before,
+.card-placeholder::before {
+  content: "";
   position: absolute;
-  transition: transform 0.3s ease;
-  border: var(--border-r-c) solid yellow;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: var(--border-c) dashed #ccc; /* Граница теперь здесь */
+  border-radius: var(--card-radius);
+  pointer-events: none; /* Чтобы не перехватывал клики */
+}
+
+/* Стопки для сбора карт (фонды) */
+.row-a,
+.row-b {
+  display: flex;
+}
+
+.stock,
+.row-a,
+.row-b {
+  gap: var(--gap);
+}
+
+/* Игровые стопки (табло) */
+.row-2 {
+  width: 100%;
+  display: flex;
+  gap: var(--gap);
+  flex-grow: 1;
+  justify-content: center;
 }
 
 .row-1 {
@@ -37,82 +86,24 @@
   justify-content: center;
 }
 
-/* Колода и стопка сброса */
-.row-a {
-  display: flex;
-  gap: var(--gap);
-  border: var(--border-r-c) solid yellow;
-}
-
-.stock,
-.card-waste,
-.foundation {
+/* Стиль для карт в стопках */
+.card-placeholder .card {
   width: var(--card-width);
   height: var(--card-height);
   border-radius: var(--card-radius);
-  background: #f0f0f0;
-  border: 2px dashed #ccc;
-}
-
-/* Стопки для сбора карт (фонды) */
-.row-b {
-  display: flex;
-  gap: var(--gap);
-  border: var(--border-r-c) solid yellow;
-}
-
-/* Игровые стопки (табло) */
-.row-2 {
-  display: flex;
-  gap: var(--gap);
-  flex-grow: 1;
-  justify-content: center;
-}
-
-.card-placeholder {
-  width: var(--card-width);
-  height: var(--card-height);
-  position: relative;
-  border: 2px dashed #ccc;
-  background: #f0f0f0;
-}
-
-/* Стиль для карт в стопках */
-.card-placeholder .card {
   position: absolute;
-  top: calc(var(--border-r-c) / 2 * (-1));
-  left: calc(var(--border-r-c) / 2 * (-1));
+  transition: transform 0.3s ease;
+  border: var(--border-c) solid yellow;
+  top: 0;
+  left: 0;
   background: #ac0e0e;
-  
 }
 
-.card-placeholder .card:nth-child(n + 2) {
+/* .card-placeholder .card:nth-child(n + 2) {
   top: var(--card-overlap);
-  /* background: #ac0e0e; */
+} */
+
+.face-down {
+  background: #ac0e0e;
+  color: transparent !important;
 }
-
-/* Адаптация для мобильных */
-/* @media (max-width: 768px) {
-  :root {
-    --card-width: 15vw;
-  }
-  
-  .tableau-piles {
-    gap: 1vw;
-  }
-} */
-
-/* @media (max-width: 480px) {
-  :root {
-    --card-width: 20vw;
-    --card-overlap: calc(var(--card-width) * 0.2);
-  }
-  
-  .game-table {
-    grid-template-rows: auto auto 1fr;
-  }
-  
-  .foundation-piles {
-    order: -1; Переносим фонды наверх
-  }
-} */
