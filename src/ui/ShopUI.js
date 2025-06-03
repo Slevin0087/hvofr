@@ -43,7 +43,7 @@ export class ShopUI {
     });
 
     Object.entries(this.elements.categoryButtons).forEach(([category, btn]) => {
-        console.log('category:', typeof category);
+        // console.log('category:', typeof category);
         
       btn.addEventListener("click", () => {
         this.events.emit("shop:category:change", category);
@@ -108,7 +108,7 @@ export class ShopUI {
   }
 
   setActiveCategory(category) {
-    console.log("в setActiveCategory:", category);
+    // console.log("в setActiveCategory:", category);
 
     // Обновляем кнопки
     Object.values(this.elements.categoryButtons).forEach((btn) => {

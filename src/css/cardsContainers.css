@@ -1,0 +1,118 @@
+:root {
+  --card-width: 10vw; /* Базовая ширина карты */
+  --card-height: 14vw; /* Высота (1.4 от ширины) */
+  --card-radius: 0.5vw; /* Скругление углов */
+  --card-overlap: 3vw; /* Перекрытие карт в tableau */
+  --gap: 1vw; /* Отступы между элементами */
+  --gap-row1: 25vw;
+  --border-r-c: 0.2em;
+}
+
+/* Контейнер игры */
+.game-container {
+  width: 100vw;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2vh;
+  box-sizing: border-box;
+  border: var(--border-r-c) solid yellow;
+  justify-content: center;
+}
+
+/* Общие стили для всех карт */
+.card {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--card-radius);
+  position: absolute;
+  transition: transform 0.3s ease;
+  border: var(--border-r-c) solid yellow;
+}
+
+.row-1 {
+  display: flex;
+  gap: var(--gap-row1);
+  margin-bottom: 3vh;
+  justify-content: center;
+}
+
+/* Колода и стопка сброса */
+.row-a {
+  display: flex;
+  gap: var(--gap);
+  border: var(--border-r-c) solid yellow;
+}
+
+.stock,
+.card-waste,
+.foundation {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--card-radius);
+  background: #f0f0f0;
+  border: 2px dashed #ccc;
+}
+
+/* Стопки для сбора карт (фонды) */
+.row-b {
+  display: flex;
+  gap: var(--gap);
+  border: var(--border-r-c) solid yellow;
+}
+
+/* Игровые стопки (табло) */
+.row-2 {
+  display: flex;
+  gap: var(--gap);
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.card-placeholder {
+  width: var(--card-width);
+  height: var(--card-height);
+  position: relative;
+  border: 2px dashed #ccc;
+  background: #f0f0f0;
+}
+
+/* Стиль для карт в стопках */
+.card-placeholder .card {
+  position: absolute;
+  top: calc(var(--border-r-c) / 2 * (-1));
+  left: calc(var(--border-r-c) / 2 * (-1));
+  background: #ac0e0e;
+  
+}
+
+.card-placeholder .card:nth-child(n + 2) {
+  top: var(--card-overlap);
+  /* background: #ac0e0e; */
+}
+
+/* Адаптация для мобильных */
+/* @media (max-width: 768px) {
+  :root {
+    --card-width: 15vw;
+  }
+  
+  .tableau-piles {
+    gap: 1vw;
+  }
+} */
+
+/* @media (max-width: 480px) {
+  :root {
+    --card-width: 20vw;
+    --card-overlap: calc(var(--card-width) * 0.2);
+  }
+  
+  .game-table {
+    grid-template-rows: auto auto 1fr;
+  }
+  
+  .foundation-piles {
+    order: -1; Переносим фонды наверх
+  }
+} */

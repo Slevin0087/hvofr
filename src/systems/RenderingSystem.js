@@ -29,13 +29,13 @@ export class RenderingSystem {
   }
 
   // изначально, потом renderFullGame
-//   renderGame(deck, tableaus, foundations, stock) {
-//     // this.clearGameElements();
-//     this.renderTableaus(tableaus);
-//     this.renderFoundations(foundations);
-//     this.renderStock(stock);
-//     this.renderWaste(stock);
-//   }
+  //   renderGame(deck, tableaus, foundations, stock) {
+  //     // this.clearGameElements();
+  //     this.renderTableaus(tableaus);
+  //     this.renderFoundations(foundations);
+  //     this.renderStock(stock);
+  //     this.renderWaste(stock);
+  //   }
 
   // изначально
   // renderCard(card, containerId, offset) {
@@ -119,13 +119,23 @@ export class RenderingSystem {
 
   /////////////////////////////////
   renderGame() {
+    // Очищение контейнеров
+    this.domElements.gameContainer.innerHTML = '';
+    this.domElements.rowElement.innerHTML = '';
+    this.domElements.tableausEl.innerHTML = '';
+    this.domElements.foundationsDiv.innerHTML = '';
+    this.domElements.stockDivEl.innerHTML = '';
+
+
     // Добавляем элементы в DOM
     this.domElements.gameContainer.append(
       this.domElements.rowElement,
-      this.domElements.tableausEl
-      // this.domElements.buttonsContainer
+      this.domElements.tableausEl,
     );
-    this.domElements.rowElement.append(this.domElements.stockDivEl, this.domElements.foundationsDiv);
+    this.domElements.rowElement.append(
+      this.domElements.stockDivEl,
+      this.domElements.foundationsDiv
+    );
 
     this.domElements.stockDivEl.appendChild(this.stock.element);
     this.domElements.stockDivEl.appendChild(this.stock.wasteElement);
@@ -142,7 +152,6 @@ export class RenderingSystem {
   }
 
   renderCards() {
-    
     // Очищаем старые карты
     document.querySelectorAll(".card").forEach((el) => el.remove());
     // Рендерим карты в tableau
@@ -154,7 +163,7 @@ export class RenderingSystem {
     // Устанавливаем стили для stock добавив класс
     this.renderStockElement();
   }
-  
+
   renderCardsForFoundation() {
     this.foundations.forEach((foundation, i) => {
       if (foundation.cards.length > 0) {
@@ -163,10 +172,10 @@ export class RenderingSystem {
       }
     });
   }
-  
+
   renderCardsForTableau() {
     this.tableaus.forEach((tableau, i) => {
-      console.log('renderCardssssssssss', tableau);
+      // console.log('renderCardssssssssss', tableau);
       tableau.cards.forEach((card, j) => {
         this.renderCard(card, `tableau-${i}`, j);
       });
@@ -258,8 +267,8 @@ export class RenderingSystem {
 
   // после
   renderCard(card, containerId, offset = 0) {
-    console.log('renderCardddddddddddddddddddd');
-    
+    // console.log('renderCardddddddddddddddddddd');
+
     const container = document.getElementById(containerId);
     if (!container) return;
 
@@ -295,7 +304,10 @@ export class RenderingSystem {
 
     // Настройка рубашки/лица
     if (!card.faceUp) {
-      cardElement.classList.add("face-down", this.state.state.settings.cardBack);
+      cardElement.classList.add(
+        "face-down",
+        this.state.state.settings.cardBack
+      );
     } else {
       cardElement.classList.add(this.state.state.settings.cardFace);
     }
@@ -386,7 +398,10 @@ export class RenderingSystem {
       element: cardElement,
       duration: UIConfig.animations.cardFlipDuration,
       onComplete: () => {
-        cardElement.classList.remove("face-down", this.state.state.settings.cardBack);
+        cardElement.classList.remove(
+          "face-down",
+          this.state.state.settings.cardBack
+        );
         cardElement.classList.add(this.state.state.settings.cardFace);
         this.addCardEventListeners(cardElement, card);
       },

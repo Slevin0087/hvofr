@@ -22,7 +22,7 @@ export class NamePage {
     this.getDisplayPage();
     this.setupEventListeners();
     this.loadSavedName();
-    console.log("this.displayPage:", this.displayPage);
+    // console.log("this.displayPage:", this.displayPage);
   }
 
   getDisplayPage() {
@@ -48,7 +48,7 @@ export class NamePage {
   }
 
   handleSubmit(event) {
-    console.log("в handleSubmit");
+    // console.log("в handleSubmit");
 
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -59,7 +59,7 @@ export class NamePage {
   }
 
   handleSkip() {
-    console.log("в handleSkip");
+    // console.log("в handleSkip");
 
     const defaultName = "Игрок";
     this.events.emit("player:name:set", defaultName);

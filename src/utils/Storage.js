@@ -230,7 +230,7 @@ export class Storage {
 
   // === Player Data ===
   savePlayerData(playerData) {
-    console.log("playerData:", playerData);
+    // console.log("playerData:", playerData);
 
     localStorage.setItem("playerData", JSON.stringify(playerData));
   }

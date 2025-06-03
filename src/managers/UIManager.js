@@ -50,7 +50,7 @@ export class UIManager {
     });
 
     this.eventManager.on("ui:menu:show", (activePage) => {
-      console.log("activePage:", activePage);
+      // console.log("activePage:", activePage);
 
       this.hideAll(activePage);
       this.components.menuPage.show(this.stateManager.state.game.isRunning);
@@ -96,7 +96,7 @@ export class UIManager {
   }
 
   hideAll(arg = null) {
-    console.log("arg:", arg);
+    // console.log("arg:", arg);
 
     Object.values(this.components).forEach((component) => {
       if (!arg) component.page.classList.add("hidden");
