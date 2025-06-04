@@ -79,8 +79,9 @@
   gap: var(--gap-for-flex);
   justify-content: center;
   text-align: center;
-  bottom: 0.5em;
-  left: 1em;
+  bottom: 0;
+  left: 0;
+  padding: calc(var(--padding-sb) / 2);
 }
 
 .controls-btn-container button {
