@@ -108,11 +108,11 @@
   /* Убираем border из контейнера! */
 }
 
-.card-placeholder .red {
+.red {
   color: red;
 }
 
-.card-placeholder .black {
+.black {
   color: black;
 }
 
