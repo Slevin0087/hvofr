@@ -22,6 +22,10 @@
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: var(--card-width);
   height: var(--card-height);
   border-radius: var(--card-radius);
@@ -31,6 +35,18 @@
   top: 0;
   left: 0;
   background: rgb(201, 189, 189);
+}
+
+.card .center {
+  width: 100%;
+  font-size: 3em;
+}
+
+.card .bottom {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .foundation,
