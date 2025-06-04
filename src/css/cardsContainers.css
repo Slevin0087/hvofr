@@ -25,11 +25,17 @@
   background-color: rgba(192, 192, 192, 0.411);
 }
 
-/* .stock-span {
-  font-size: 70px;
-} */
+.stock-span {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  font-size: 76px;
+}
 
 .foundation-span {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
   font-size: var(--card-width);
 }
 

@@ -81,6 +81,12 @@
   left: 1em;
 }
 
+.controls-btn-container button {
+  color: yellow !important;
+  -webkit-text-fill-color: yellow;
+  
+}
+
 @media (min-width: 350px) {
   .status-bar {
     font-size: 1.4em;
