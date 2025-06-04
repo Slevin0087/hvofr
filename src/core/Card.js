@@ -35,7 +35,7 @@ export class Card {
   }
 
   isNextInSequence(otherCard) {
-    return this.getRank() === otherCard.getRank() + 1;
+    return this.getRank() === otherCard.getRank() - 1;
   }
 
   isSameSuit(otherCard) {

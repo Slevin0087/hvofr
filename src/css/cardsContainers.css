@@ -75,13 +75,6 @@
   margin-bottom: 0;
 }
 
-.foundation,
-.stock,
-.card-waste,
-.card-placeholder {
-  background-color: rgba(192, 192, 192, 0.411);
-}
-
 .stock-span {
   display: block;
   max-width: 100%;
@@ -110,6 +103,8 @@
   width: var(--card-width);
   height: var(--card-height);
   text-align: center;
+  background-color: rgba(192, 192, 192, 0.411);
+  border-radius: var(--card-radius);
   /* Убираем border из контейнера! */
 }
 
