@@ -33,7 +33,10 @@
   background: rgb(201, 189, 189);
 }
 
-.foundation {
+.foundation,
+.stock,
+.card-waste,
+.card-placeholder {
   background-color: rgba(192, 192, 192, 0.411);
 }
 
@@ -41,7 +44,7 @@
   display: block;
   max-width: 100%;
   max-height: 100%;
-  font-size: 76px;
+  font-size: var(--card-width);
 }
 
 .foundation-span, .card-placeholder-span {
@@ -49,12 +52,6 @@
   max-width: 100%;
   max-height: 100%;
   font-size: var(--card-width);
-  /* text-align: center; */
-}
-
-.stock,
-.card-waste {
-  background-color: rgba(192, 192, 192, 0.411);
 }
 
 /* Общий стиль для всех контейнеров */
