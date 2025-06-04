@@ -4,12 +4,14 @@
   --card-overlap: calc(var(--card-height) * 0.3);
   --gap: 0.1vw; /* Отступы между элементами */
   --border-c: 0.2vw;
-  --padding-c: 0.5vw;
+  --padding-c: 0.3vw;
   /* --card-width: 14vw; Базовая ширина карты */
   --card-width: calc((100vw - (var(--padding-c) * 2)) / 7 - (var(--gap) * 6));
   --card-height: calc(var(--card-width) * 1.4); /* Высота (1.4 от ширины) */
   --gap-row1: calc(var(--card-width) + var(--gap) * 2);
   --margin-card-value: 0.2em;
+  --font-size-tbcard-v: calc(var(--card-width) / 5);
+  --font-size-ccard-v: calc(var(--card-width) / 1.7);
 }
 
 /* Контейнер игры */
@@ -26,7 +28,7 @@
   padding: var(--padding-c);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: var(--card-width);
   height: var(--card-height);
@@ -40,32 +42,37 @@
 }
 
 .card .top {
-  font-size: calc(var(--card-width) / 5);
-  /* padding: var(--padding-c); */
-  height: max-content;
+  font-size: var(--font-size-tbcard-v);
+  padding: var(--padding-c);
+  margin-top: 0;
+  /* height: max-content; */
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
-}
-
-.card .center {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: max-content;
-  font-size: calc(var(--card-width) / 1.3);
-  align-items: center;
+  align-items: flex-start;
   text-align: center;
 }
 
+.card .center {
+  font-size: var(--font-size-ccard-v); /* Размер шрифта */
+  line-height: 1; /* Убираем лишний межстрочный интервал */
+  padding: 0; /* Убираем внутренние отступы */
+  margin: 0; /* Убираем внешние отступы */
+  /* display: inline-block; Или просто block, если не нужно inline-поведение */
+  width: 100%; /* Если нужно растянуть на всю ширину */
+  text-align: center; /* Центрируем текст по горизонтали */
+}
+
 .card .bottom {
-  font-size: calc(var(--card-width) / 5);
-  height: max-content;
+  font-size: var(--font-size-tbcard-v);
+  /* height: max-content; */
   width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  align-items: flex-end; /* Текст прижимается к низу */
+  padding: var(--padding-c); /* Добавляет отступы */
+  margin-bottom: 0;
 }
 
 .foundation,

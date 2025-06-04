@@ -289,15 +289,15 @@ export class RenderingSystem {
     cardElement.dataset.value = card.value;
 
     // Создаем элементы для символов карты
-    const topSymbol = document.createElement("div");
+    const topSymbol = document.createElement("span");
     topSymbol.className = "card-symbol top";
     topSymbol.textContent = card.getSymbol();
 
-    const centerSymbol = document.createElement("div");
+    const centerSymbol = document.createElement("span");
     centerSymbol.className = "card-symbol center";
     centerSymbol.textContent = card.suit;
 
-    const bottomSymbol = document.createElement("div");
+    const bottomSymbol = document.createElement("span");
     bottomSymbol.className = "card-symbol bottom";
     bottomSymbol.textContent = card.getSymbol();
 
