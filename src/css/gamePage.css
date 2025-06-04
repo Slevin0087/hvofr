@@ -1,5 +1,6 @@
 :root {
   --gap-for-flex: 1em;
+  --padding-sb: 0.5em;
 }
 
 .game-interface {
@@ -22,6 +23,7 @@
   width: 100%;
   /* color: white; */
   background-color: brown;
+  padding: calc(var(--padding-sb) / 2) var(--padding-sb);
 }
 
 .status-bar span {
