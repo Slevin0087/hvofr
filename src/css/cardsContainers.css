@@ -4,7 +4,7 @@
   --card-overlap: calc(var(--card-height) * 0.3);
   --gap: 0.1vw; /* Отступы между элементами */
   --border-c: 0.2vw;
-  --padding-c: 0.3vw;
+  --padding-c: 0.07em;
   /* --card-width: 14vw; Базовая ширина карты */
   --card-width: calc((100vw - (var(--padding-c) * 2)) / 7 - (var(--gap) * 6));
   --card-height: calc(var(--card-width) * 1.4); /* Высота (1.4 от ширины) */
