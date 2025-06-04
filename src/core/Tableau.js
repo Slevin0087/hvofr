@@ -9,11 +9,18 @@ export class Tableau {
 
   createTableauElement() {
     const element = document.createElement("div");
+    const span = document.createElement("span");
     element.className = "card-placeholder";
     element.id = `tableau-${this.index}`;
+    span.textContent = "K";
+    span.classList.add("card-placeholder-span");
+    element.appendChild(span);
     return element;
   }
+
   canAccept(card) {
+    console.log('проверяется карта-можно ли в tableau:', card);
+
     if (!card.faceUp) return false;
 
     // Пустой tableau принимает только королей
@@ -23,10 +30,13 @@ export class Tableau {
 
     // Проверяем последовательность и цвет
     const topCard = this.getTopCard();
+    // console.log("topCard:", topCard);
+
     return card.isOppositeColor(topCard) && card.isNextInSequence(topCard);
   }
 
   addCard(card) {
+    console.log('добавляется в tableau:', card);
     const position = this.cards.length;
     card.positionData = {
       parent: `tableau-${this.index}`,
@@ -58,6 +68,7 @@ export class Tableau {
   }
 
   removeCard(card) {
+    console.log('удаление карты из tableau:', card);
     const index = this.cards.indexOf(card);
     if (index >= 0) {
       this.cards.splice(index, 1);

@@ -17,7 +17,7 @@ export class CardSystem {
   }
 
   setupEventListeners() {
-    this.events.on(GameEvents.CARD_CLICK, (card) => this.handleCardClick(card));
+    // this.events.on(GameEvents.CARD_CLICK, (card) => this.handleCardClick(card));
     this.events.on(GameEvents.CARD_DRAG_START, (card, element) =>
       this.handleDragStart(card, element)
     );
@@ -59,7 +59,7 @@ export class CardSystem {
   }
 
   highlightValidTargets(card) {
-    const { foundations, tableaus } = this.state.game;
+    const { foundations, tableaus } = this.state.cards;
 
     // Проверка foundation
     foundations.forEach((foundation, index) => {
@@ -138,7 +138,7 @@ export class CardSystem {
   }
 
   getValidTargets(card) {
-    const { foundations, tableaus } = this.state.game;
+    const { foundations, tableaus } = this.state.cards;
     const targets = [];
 
     foundations.forEach((foundation, index) => {

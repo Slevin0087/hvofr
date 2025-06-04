@@ -57,7 +57,8 @@ export class RenderingSystem {
 
   setupEventListeners() {
     this.events.on("game:start", () => this.renderFullGame());
-    this.events.on("card:moved", (data) => this.animateCardMove(data));
+    // this.events.on("card:moved", (data) => this.animateCardMove(data));
+    this.events.on("card:moved", () => this.renderCards());
     this.events.on("card:flipped", (card) => this.animateCardFlip(card));
     this.events.on("game:undo:move", (data) => this.animateUndoMove(data));
     this.events.on("hint:show", (hint) => this.showHint(hint));
@@ -165,6 +166,7 @@ export class RenderingSystem {
   }
 
   renderCardsForFoundation() {
+    console.log('в renderCardsForFoundation');
     this.foundations.forEach((foundation, i) => {
       if (foundation.cards.length > 0) {
         const card = foundation.cards[foundation.cards.length - 1];
@@ -238,7 +240,7 @@ export class RenderingSystem {
     this.renderCard(waste, "waste");
   }
 
-  renderFoundations() {
+  renderFoundations() {    
     this.state.game.foundations.forEach((foundation, index) => {
       const foundationElement = document.getElementById(`foundation-${index}`);
       foundationElement.innerHTML = "";
@@ -370,6 +372,8 @@ export class RenderingSystem {
   }
 
   animateCardMove({ card, from, to }) {
+    console.log('заход в анимацию');
+    
     const cardElement = card.domElement;
     if (!cardElement) return;
 
@@ -378,14 +382,16 @@ export class RenderingSystem {
 
     if (!fromElement || !toElement) return;
 
-    Animator.moveCard({
+    // Animator.moveCard({
+      Animator.animateCardMove({
       element: cardElement,
       from: fromElement,
       to: toElement,
       duration: UIConfig.animations.cardMoveDuration,
       onComplete: () => {
         this.cache.delete(card);
-        this.renderFullGame();
+        // this.renderFullGame();
+        this.renderCards();
       },
     });
   }

@@ -14,37 +14,8 @@ export class GameLogicSystem {
     this.setupEventListeners();
   }
 
-  // после
-  handleCardClick(card) {
-    console.log("в handleCardClick");
-    console.log('this.state:', this.state);
-    
-
-    this.audio.play("click");
-    if (!card.faceUp || this.state.game.isPaused) return;
-
-    // Проверяем можно ли переместить карту в foundation
-    for (let i = 0; i < this.state.game.foundations.length; i++) {
-      if (this.state.game.foundations[i].canAccept(card)) {
-        this.events.emit("card:to:foundation", { card, foundationIndex: i });
-        return;
-      }
-    }
-
-    // Если нет - проверяем tableau
-    for (let i = 0; i < this.state.game.tableaus.length; i++) {
-      if (this.state.game.tableaus[i].canAccept(card)) {
-        this.events.emit("card:to:tableau", { card, tableauIndex: i });
-        return;
-      }
-    }
-
-    // Если карту нельзя переместить - звуковой сигнал
-    this.audio.play("error");
-  }
-
   setupEventListeners() {
-    this.events.on(GameEvents.CARD_CLICK, (card) => this.handleCardClick(card));
+    // this.events.on(GameEvents.CARD_CLICK, (card) => this.handleCardClick(card));
     this.events.on("card:to:foundation", (data) =>
       this.moveCardToFoundation(data)
     );
@@ -118,35 +89,72 @@ export class GameLogicSystem {
   // }
 
   // изначально
-  moveCardToFoundation(card, foundationIndex, foundations, tableaus) {
-    // Логика перемещения карты в foundation
-    const source = this.getCardSource(card);
+  // moveCardToFoundation(card, foundationIndex, foundations, tableaus) {
+  //   console.log('в moveCardToFoundation:', moveCardToFoundation);
 
-    if (source.type === "tableau") {
-      const tableau = tableaus[source.index];
-      tableau.removeCard(card);
-      if (
-        tableau.cards.length > 0 &&
-        !tableau.cards[tableau.cards.length - 1].faceUp
-      ) {
-        this.flipCard(tableau.cards[tableau.cards.length - 1]);
-        this.state.game.faceDownCards--;
+  //   // Логика перемещения карты в foundation
+  //   const source = this.getCardSource(card);
+
+  //   if (source.type === "tableau") {
+  //     const tableau = tableaus[source.index];
+  //     tableau.removeCard(card);
+  //     if (
+  //       tableau.cards.length > 0 &&
+  //       !tableau.cards[tableau.cards.length - 1].faceUp
+  //     ) {
+  //       this.flipCard(tableau.cards[tableau.cards.length - 1]);
+  //       this.state.game.faceDownCards--;
+  //     }
+  //   } else if (source.type === "waste") {
+  //     this.stock.removeCurrentCard();
+  //   }
+
+  //   foundations[foundationIndex].addCard(card);
+  //   this.events.emit("card:moved", {
+  //     card,
+  //     to: `foundation-${foundationIndex}`,
+  //   });
+  // }
+
+  // после
+  handleCardClick(card) {
+    console.log("клик по карте");
+    // console.log("this.state:", this.state);
+    console.log("card:", card);
+
+    this.audio.play("click");
+    if (!card.faceUp || this.state.game.isPaused) return;
+
+    // Проверяем можно ли переместить карту в foundation
+    for (let i = 0; i < this.state.cards.foundations.length; i++) {
+      if (this.state.cards.foundations[i].canAccept(card)) {
+        this.events.emit("card:to:foundation", { card, foundationIndex: i });
+        return;
       }
-    } else if (source.type === "waste") {
-      this.stock.removeCurrentCard();
     }
 
-    foundations[foundationIndex].addCard(card);
-    this.events.emit("card:moved", {
-      card,
-      to: `foundation-${foundationIndex}`,
-    });
+    // Если нет - проверяем tableau
+    for (let i = 0; i < this.state.cards.tableaus.length; i++) {
+      console.log('цикл проверки tableau');
+      // console.log(this.state.cards);
+      
+      if (this.state.cards.tableaus[i].canAccept(card)) {
+        console.log('if');
+        
+        this.events.emit("card:to:tableau", { card, tableauIndex: i });
+        return;
+      }
+    }
+
+    // Если карту нельзя переместить - звуковой сигнал
+    this.audio.play("error");
   }
 
   // Остальные методы системы логики...
   // после
   moveCardToFoundation({ card, foundationIndex }) {
-    const foundation = this.state.game.foundations[foundationIndex];
+    console.log("в moveCardToFoundation:");
+    const foundation = this.state.cards.foundations[foundationIndex];
     const source = this.getCardSource(card);
 
     if (!foundation.canAccept(card)) {
@@ -161,12 +169,17 @@ export class GameLogicSystem {
       to: `foundation-${foundationIndex}`,
     });
 
+    console.log("this.state:", this.state);
+
     // Удаляем карту из исходного места
     this.removeCardFromSource(card, source);
 
     // Добавляем в foundation
     foundation.addCard(card);
     this.state.incrementStat("cardsToFoundation");
+
+    // Рендер/Обновление карт
+    this.events.emit("card:moved");
 
     // Обновляем очки
     const points = this.calculatePoints("toFoundation");
@@ -186,11 +199,12 @@ export class GameLogicSystem {
   }
 
   moveCardToTableau({ card, tableauIndex }) {
-    const tableau = this.state.game.tableaus[tableauIndex];
+    const tableau = this.state.cards.tableaus[tableauIndex];
     const source = this.getCardSource(card);
 
     if (!tableau.canAccept(card)) {
-      this.audio.play("error");
+      // this.audio.play("error");
+      this.audio.play("info");
       return;
     }
 
@@ -206,6 +220,9 @@ export class GameLogicSystem {
 
     // Добавляем в tableau
     tableau.addCard(card);
+
+    // Рендер/Обновление карт
+    this.events.emit("card:moved");
 
     // Обновляем очки
     const points = this.calculatePoints("toTableau");
@@ -227,14 +244,16 @@ export class GameLogicSystem {
   }
 
   removeCardFromSource(card, source) {
+    console.log("в removeCardFromSource:", source);
+
     if (source.startsWith("tableau")) {
       const index = parseInt(source.split("-")[1]);
-      this.state.game.tableaus[index].removeCard(card);
+      this.state.cards.tableaus[index].removeCard(card);
     } else if (source.startsWith("foundation")) {
       const index = parseInt(source.split("-")[1]);
-      this.state.game.foundations[index].removeTopCard();
+      this.state.cards.foundations[index].removeTopCard();
     } else if (source === "waste") {
-      this.state.game.stock.takeFromWaste();
+      this.state.cards.stock.takeFromWaste();
     }
   }
 
@@ -242,7 +261,7 @@ export class GameLogicSystem {
     if (!source.startsWith("tableau")) return;
 
     const index = parseInt(source.split("-")[1]);
-    const tableau = this.state.game.tableaus[index];
+    const tableau = this.state.cards.tableaus[index];
     const topCard = tableau.getTopCard();
 
     if (topCard && !topCard.faceUp) {
@@ -272,7 +291,7 @@ export class GameLogicSystem {
   }
 
   checkWinCondition() {
-    return this.state.game.foundations.every((f) => f.isComplete());
+    return this.state.cards.foundations.every((f) => f.isComplete());
   }
 
   handleWin() {
@@ -317,11 +336,11 @@ export class GameLogicSystem {
 
   findBestHint() {
     // Сначала проверяем карты в waste
-    const wasteCard = this.state.game.stock.getWasteCard();
+    const wasteCard = this.state.cards.stock.getWasteCard();
     if (wasteCard) {
       // Проверяем foundation
-      for (let i = 0; i < this.state.game.foundations.length; i++) {
-        if (this.state.game.foundations[i].canAccept(wasteCard)) {
+      for (let i = 0; i < this.state.cards.foundations.length; i++) {
+        if (this.state.cards.foundations[i].canAccept(wasteCard)) {
           return {
             card: wasteCard,
             target: `foundation-${i}`,
@@ -331,8 +350,8 @@ export class GameLogicSystem {
       }
 
       // Проверяем tableau
-      for (let i = 0; i < this.state.game.tableaus.length; i++) {
-        if (this.state.game.tableaus[i].canAccept(wasteCard)) {
+      for (let i = 0; i < this.state.cards.tableaus.length; i++) {
+        if (this.state.cards.tableaus[i].canAccept(wasteCard)) {
           return {
             card: wasteCard,
             target: `tableau-${i}`,
@@ -343,15 +362,15 @@ export class GameLogicSystem {
     }
 
     // Затем проверяем tableau
-    for (let i = 0; i < this.state.game.tableaus.length; i++) {
-      const tableau = this.state.game.tableaus[i];
+    for (let i = 0; i < this.state.cards.tableaus.length; i++) {
+      const tableau = this.state.cards.tableaus[i];
       const topCard = tableau.getTopCard();
 
       if (!topCard) continue;
 
       // Проверяем foundation
-      for (let j = 0; j < this.state.game.foundations.length; j++) {
-        if (this.state.game.foundations[j].canAccept(topCard)) {
+      for (let j = 0; j < this.state.cards.foundations.length; j++) {
+        if (this.state.cards.foundations[j].canAccept(topCard)) {
           return {
             card: topCard,
             target: `foundation-${j}`,

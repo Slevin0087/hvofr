@@ -5,6 +5,7 @@ import { Stock } from "./Stock.js";
 import { GameLogicSystem } from "../systems/GameLogicSystem.js";
 import { RenderingSystem } from "../systems/RenderingSystem.js";
 import { AnimationSystem } from "../systems/AnimationSystem.js";
+import { CardSystem } from "../systems/CardSystem.js";
 
 export class Game {
   constructor(stateManager, eventManager, audioManager) {
@@ -18,6 +19,7 @@ export class Game {
     this.stock = new Stock();
 
     this.systems = {
+      cards: new CardSystem(this.state, this.events),
       logic: new GameLogicSystem(this.state, this.events, this.audio),
       render: new RenderingSystem(this.state, this.events, this.stock, this.foundations, this.tableaus),
       animation: new AnimationSystem(this.state, this.events),
@@ -35,8 +37,18 @@ export class Game {
       this.foundations,
       this.stock
     );
+    this.initCards();
     this.state.game.isRunning = true;
     this.events.emit("game:started");
+  }
+
+  initCards() {
+    this.state.cards = {
+      deck: this.deck,
+      foundations: this.foundations,
+      tableaus: this.tableaus,
+      stock: this.stock,
+    }
   }
 
   restart() {
@@ -46,8 +58,8 @@ export class Game {
   }
 
   setupEventListeners() {
-    this.events.on("card:click", (card) =>
-      this.systems.logic.handleCardClick(card, this.foundations, this.tableaus)
+    this.events.on("card:clicked", (card) =>
+      this.systems.logic.handleCardClick(card)
     );
     this.events.on("card:flip", (card) =>
       this.systems.logic.handleCardFlip(card)

@@ -188,7 +188,7 @@ export class StateManager {
     return false;
   }
 
-  updateLastMove(moveData) {
+  updateLastMove(moveData) {    
     this.state.game.lastMove = moveData;
   }
 
