@@ -9,6 +9,7 @@
   --card-width: calc((100vw - (var(--padding-c) * 2)) / 7 - (var(--gap) * 6));
   --card-height: calc(var(--card-width) * 1.4); /* Высота (1.4 от ширины) */
   --gap-row1: calc(var(--card-width) + var(--gap) * 2);
+  --margin-card-value: 0.2em;
 }
 
 /* Контейнер игры */
@@ -37,6 +38,14 @@
   background: rgb(201, 189, 189);
 }
 
+.card .top {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: var(--margin-card-value);
+}
+
 .card .center {
   width: 100%;
   font-size: 3em;
@@ -45,8 +54,9 @@
 .card .bottom {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: var(--margin-card-value);
 }
 
 .foundation,
@@ -63,7 +73,8 @@
   font-size: var(--card-width);
 }
 
-.foundation-span, .card-placeholder-span {
+.foundation-span,
+.card-placeholder-span {
   display: block;
   max-width: 100%;
   max-height: 100%;
