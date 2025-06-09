@@ -1,5 +1,5 @@
 export const GameConfig = {
-  gameState: {
+  gefaultGameState: {
     isRunning: false,
     isPaused: false,
     score: 0,
@@ -9,6 +9,7 @@ export const GameConfig = {
     minPossibleMoves: 52, // Теоретический минимум для пасьянса
     difficulty: "normal",
   },
+
   rules: {
     initialScore: 0,
     scoreForFoundation: 10,
@@ -38,23 +39,11 @@ export const GameConfig = {
     soundEnabled: true,
     theme: "default",
     language: "ru",
-    musicVolume: 0.7,
+    musicVolume: 20,
     effectsVolume: 0.9,
     difficulty: "normal",
     cardFaceStyle: "classic",
     cardBackStyle: "blue",
     backgroundStyle: "default",
-  },
-
-  defaultPlayerStats: {
-    wins: 0,
-    losses: 0,
-    totalMoves: 0,
-    cardsToFoundation: 0,
-    highestScore: 0,
-    fastestWin: Infinity,
-    gamesPlayed: 0,
-    cardsFlipped: 0,
-    winsWithoutHints: 0,
   },
 };

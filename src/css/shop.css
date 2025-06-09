@@ -81,6 +81,8 @@
   width: 100%;
   line-height: 1;
   background-color: #3e8e41;
+  border-radius: var(--card-radius);
+  padding: calc(var(--padding-shop-head) / 3);
 }
 
 .item-head h3 {

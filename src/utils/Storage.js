@@ -15,17 +15,6 @@ export class Storage {
     };
   }
 
-  // === Game State ===
-  saveGameState(gameState) {
-    try {
-      localStorage.setItem("gameState", JSON.stringify(gameState));
-      return true;
-    } catch (e) {
-      console.error("Error saving game state:", e);
-      return false;
-    }
-  }
-
   loadGameState() {
     try {
       const state = JSON.parse(localStorage.getItem("gameState"));
@@ -36,30 +25,34 @@ export class Storage {
     }
   }
 
-  loadPlayerData() {
-    return (
-      JSON.parse(localStorage.getItem("playerData")) || {
-        name: "Игрок",
-        coins: 0,
-      }
-    );
-  }
-
-  loadPlayerStats() {
+  loadPlayerStats(stats) {
     try {
-      const stats = JSON.parse(localStorage.getItem("playerStats"));
-      return { ...this.defaultPlayerStats, ...stats };
+      const playerStats = JSON.parse(localStorage.getItem("playerStats"));
+      console.log('playerStatssssssssssss:', playerStats);
+      
+      return { ...stats, ...playerStats };
     } catch {
-      return { ...this.defaultPlayerStats };
+      return { ...stats };
     }
   }
 
-  loadGameSettings() {
+  loadGameSettings(settings) {
     try {
-      const settings = JSON.parse(localStorage.getItem("gameSettings"));
-      return { ...this.defaultSettings, ...settings };
+      const gameSettings = JSON.parse(localStorage.getItem("gameSettings"));
+      return { ...settings, ...gameSettings };
     } catch {
-      return { ...this.defaultSettings };
+      return { ...settings };
+    }
+  }
+
+  // === Game State ===
+  saveGameState(gameState) {
+    try {
+      localStorage.setItem("gameState", JSON.stringify(gameState));
+      return true;
+    } catch (e) {
+      console.error("Error saving game state:", e);
+      return false;
     }
   }
 
@@ -192,27 +185,33 @@ export class Storage {
 
   // === Settings ===
   saveGameSettings(settings) {
-    const mergedSettings = {
-      ...this.defaultSettings,
+    const storage = JSON.parse(localStorage.getItem("gameSettings"));
+    const settingsState = {
+      ...storage,
       ...settings,
     };
-    localStorage.setItem("gameSettings", JSON.stringify(mergedSettings));
+    localStorage.setItem("gameSettings", JSON.stringify(settingsState));
   }
 
   // === Player Data ===
-  savePlayerData(playerData) {
+  savePlayerData(name) {
+    console.log('name:', name);
+    
     // console.log("playerData:", playerData);
-
+    const playerStats = JSON.parse(localStorage.getItem("playerStats"));
+    console.log('playerStats:', playerStats);
+    
     localStorage.setItem("playerData", JSON.stringify(playerData));
   }
 
   // === Stats ===
   // изночально было savePlayerStats(stats)???????????????????????????????
-  savePlayerStats(stats) {
-    const mergedStats = {
-      ...this.defaultPlayerStats,
+  savePlayerStats(stats) {    
+    const storage = JSON.parse(localStorage.getItem("playerStats"));    
+    const playerStats = {
+      ...storage,
       ...stats,
-    };
-    localStorage.setItem("playerStats", JSON.stringify(mergedStats));
+    };    
+    localStorage.setItem("playerStats", JSON.stringify(playerStats));
   }
 }

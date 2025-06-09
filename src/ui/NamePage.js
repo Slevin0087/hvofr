@@ -21,7 +21,8 @@ export class NamePage {
   init() {
     this.getDisplayPage();
     this.setupEventListeners();
-    this.loadSavedName();
+    this.setFocusInput();
+    // this.loadSavedName();
     // console.log("this.displayPage:", this.displayPage);
   }
 
@@ -40,12 +41,16 @@ export class NamePage {
     this.events.on("player:name:set", (n) => this.saveName(n));
   }
 
-  loadSavedName() {
-    const savedName = this.state.storage.loadPlayerData();
-    if (savedName) {
-      this.elements.input.value = savedName.name;
-    }
+  setFocusInput() {
+    console.log('this.state.state:', this.state.state);
+    
+    this.elements.input.value = this.state.state.player.name;
   }
+  // loadSavedName() {
+  //   const savedName = this.state.storage.loadPlayerData();
+  //   if (savedName) {
+  //   }
+  // }
 
   handleSubmit(event) {
     // console.log("в handleSubmit");
@@ -98,9 +103,9 @@ export class NamePage {
 
   saveName(name) {
     this.state.state.player.name = name;
-    const playerData = this.state.storage.loadPlayerData();
-    playerData.name = name;
-    this.state.storage.savePlayerData(playerData);
+    // const playerData = this.state.storage.loadPlayerData();
+    // playerData.name = name;
+    this.state.storage.savePlayerStats(this.state.state.player);
   }
 
   hide() {

@@ -79,6 +79,7 @@ export class AudioManager {
     this.eventManager.on("game:pause", () => this.pauseMusic());
     this.eventManager.on("game:resume", () => this.resumeMusic());
     this.eventManager.on("game:exit", () => this.stopMusic());
+    this.eventManager.on("settings:music:volume", (value) => this.setMusicVolume(value));
   }
 
   play(name) {
@@ -130,29 +131,35 @@ export class AudioManager {
     }
   }
 
-  toggleAllSounds(enabled) {    
+  toggleAllSounds(enabled) {
+    console.log('enabled:', enabled);
+      
     this.settings.soundEnabled = enabled;
     if (enabled) {
       this.resumeMusic();
     } else {
       this.pauseMusic();
     }
-    this.saveSettings();
+    // this.saveSettings();
   }
 
   setMusicVolume(volume) {
+    
+    volume = volume / 100;
     volume = Math.max(0, Math.min(1, volume));
+    console.log('volume:', volume);
     this.settings.musicVolume = volume;
     if (this.backgroundMusic) {
       this.backgroundMusic.volume = volume;
+      console.log('this.backgroundMusic.volume:', this.backgroundMusic.volume);
     }
-    this.saveSettings();
+    // this.saveSettings();
   }
 
   setEffectsVolume(volume) {
     volume = Math.max(0, Math.min(1, volume));
     this.settings.effectsVolume = volume;
-    this.saveSettings();
+    // this.saveSettings();
   }
 
   getState() {

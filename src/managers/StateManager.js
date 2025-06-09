@@ -1,7 +1,9 @@
 import { Storage } from "../utils/Storage.js";
 import { Validator } from "../utils/Validator.js";
 import { GameConfig } from "../configs/GameConfig.js";
+import { PlayerConfig } from "../configs/PlayerConfig.js";
 import { ShopConfig } from "../configs/ShopConfig.js";
+import { UIConfig } from "../configs/UIConfig.js";
 
 export class StateManager {
   constructor(eventManager) {
@@ -15,20 +17,17 @@ export class StateManager {
 
   init() {
     this.loadAllData();
+    this.saveAllData();
     this.setupEventListeners();
   }
 
   getInitialState() {
     return {
       ui: {
-        activePage: null,
+        activePage: UIConfig.activePage,
       },
-      game: GameConfig.gameState,
-      player: {
-        name: "Игрок",
-        coins: 0,
-        stats: GameConfig.defaultPlayerStats,
-      },
+      game: GameConfig.gefaultGameState,
+      player: PlayerConfig.defaultPlayerStats,
       settings: GameConfig.defaultSettings,
       shop: ShopConfig.defaultShopState,
       achievements: {
@@ -39,44 +38,68 @@ export class StateManager {
 
   loadAllData() {
     // Загрузка сохраненных данных
-    const savedState = this.storage.loadGameState();
-    console.log('savedState:', savedState);
-    console.log('aaaaaaaaaaaaaaaaaaaaa', this.state);
-    if (savedState && this.validator.isGameStateValid(savedState)) {
-      
-      this.state.game = {
-        ...this.state.game,
-        ...savedState,
-      };
-    }
-    console.log('ffffffffffffffffff', this.state);
-
-    // Загрузка статистики
-    const savedPlayerStats = this.storage.loadPlayerStats();
-    if (savedPlayerStats) {
-      this.state.player.stats = {
-        ...this.state.player.stats,
-        ...savedPlayerStats,
-      };
-    }
-
-    // Загрузка настроек
-    const savedSettings = this.storage.loadGameSettings();
-    if (savedSettings) {
-      this.state.settings = {
-        ...this.state.settings,
-        ...savedSettings,
-      };
-    }
-
+    this.loadGameState();
+    this.loadPlayerStats();
+    this.loadGameSettings();
     // Загрузка магазина
     this.state.shop.purchasedItems = this.storage.getPurchasedItems();
     this.state.player.coins = this.storage.getCoins();
     this.state.achievements.unlocked = this.storage.getUnlockedAchievements();
+    console.log("загрузка всех localStorage this.state:", this.state);
+  }
+
+  loadGameState() {
+    const savedGameState = this.storage.loadGameState();
+    console.log("savedGameState:", savedGameState);
+    console.log("aaaaaaaaaaaaaaaaaaaaa", this.state);
+    if (savedGameState && this.validator.isGameStateValid(savedGameState)) {
+      this.state.game = {
+        ...this.state.game,
+        ...savedGameState,
+      };
+    }
+  }
+
+  loadPlayerStats() {
+    // Загрузка статистики игрока
+    const savedPlayerStats = this.storage.loadPlayerStats(this.state.player);
+    // if (savedPlayerStats) {
+    this.state.player = {
+      ...this.state.player,
+      ...savedPlayerStats,
+    };
+  }
+
+  loadGameSettings() {
+    // Загрузка настроек
+    const savedSettings = this.storage.loadGameSettings(this.state.settings);
+    // if (savedSettings) {
+    this.state.settings = {
+      ...this.state.settings,
+      ...savedSettings,
+    };
+    // }
+  }
+
+  saveAllData() {
+    this.saveGameState();
+    this.savePlayerStats();
+    this.saveGameSettings();
+  }
+
+  saveGameState() {
+    this.storage.saveGameState(this.state.game);
+  }
+
+  savePlayerStats() {
+    this.storage.savePlayerStats(this.state.player);
+  }
+
+  saveGameSettings() {
+    this.storage.saveGameSettings(this.state.settings);
   }
 
   setupEventListeners() {
-
     this.events.on("game:start", () => {
       this.state.game.isRunning = true;
       this.state.player.stats.gamesPlayed++;
@@ -100,24 +123,15 @@ export class StateManager {
     this.events.on("game:exit", (activePage) => {
       this.state.ui.activePage = activePage;
     });
-  }
 
-  saveAllData() {
-    this.saveGameState();
-    this.storage.savePlayerStats(this.state.player.stats);
-    this.storage.saveGameSettings(this.state.settings);
-  }
+    this.events.on("settings:sound:toggle", (enabled) => {
+      this.state.settings.soundEnabled = enabled;
+      this.saveGameSettings();
+    });
 
-  saveGameState() {
-    this.storage.saveGameState({
-      game: this.state.game,
-      player: {
-        name: this.state.player.name,
-        coins: this.state.player.coins,
-      },
-      settings: this.state.settings,
-      shop: this.state.shop,
-      achievements: this.state.achievements,
+    this.events.on("settings:music:volume", (value) => {
+      this.state.settings.musicVolume = value;
+      this.saveGameSettings();
     });
   }
 
@@ -159,7 +173,7 @@ export class StateManager {
     return false;
   }
 
-  updateLastMove(moveData) {    
+  updateLastMove(moveData) {
     this.state.game.lastMove = moveData;
   }
 

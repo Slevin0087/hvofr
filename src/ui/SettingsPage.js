@@ -19,7 +19,7 @@ export class SettingsPage {
   initialize() {
     this.getDisplayPage();
     this.setupEventListeners();
-    this.loadSettings();
+    this.render();
   }
 
   getDisplayPage() {
@@ -34,8 +34,6 @@ export class SettingsPage {
     });
 
     this.elements.soundToggle.addEventListener("change", (e) => {
-      console.log('soundToggle e.target.checked:', e.target.checked);
-      
       this.events.emit("settings:sound:toggle", e.target.checked);
     });
 
@@ -48,28 +46,28 @@ export class SettingsPage {
     });
   }
 
-  loadSettings() {
-    console.log('loaaaaaaaaaaaaaaaaaad', this.state.state.settings);
+  render() {
     
     const settings = this.state.state.settings;
-
+    
     this.elements.soundToggle.checked = settings.soundEnabled;
     this.elements.difficultySelect.value = settings.difficulty;
     this.elements.musicVolume.value = settings.musicVolume;
   }
-
+  
   saveSettings() {
     const newSettings = {
       soundEnabled: this.elements.soundToggle.checked,
       difficulty: this.elements.difficultySelect.value,
       musicVolume: parseFloat(this.elements.musicVolume.value),
     };
-
+    
     this.events.emit("settings:save", newSettings);
   }
-
+  
   show() {
-    this.loadSettings();
+    console.log("loaaaaaaaaaaaaaaaaaad", this.state.state.settings);
+    this.render();
     this.page.classList.remove("hidden");
     // await Animator.fadeIn(this.page, this.displayPage);
   }

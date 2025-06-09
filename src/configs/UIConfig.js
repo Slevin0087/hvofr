@@ -1,4 +1,5 @@
 export const UIConfig = {
+  activePage: null,
   themes: {
     default: {
       colors: {
