@@ -45,9 +45,12 @@ export class Validator {
   }
 
   isGameStateValid(state) {
+    console.log('ssssssssssssss:', state);
+    
     try {
       // Проверяем основные поля состояния игры
       const requiredFields = ["score", "moves", "time", "isRunning"];
+      console.log('в isGameStateValid:', requiredFields.every((field) => field in state.game));
       return requiredFields.every((field) => field in state);
     } catch {
       return false;

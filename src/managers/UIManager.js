@@ -18,6 +18,7 @@ export class UIManager {
   init() {
     this.registerComponents();
     this.hideAll();
+    document.getElementById('loader').classList.add('hidden'),
     this.setupEventListeners();
   }
 
@@ -84,9 +85,9 @@ export class UIManager {
       this.eventManager.emit("shop:render", this.stateManager.state.shop, ShopConfig);
     });
 
-    this.eventManager.on("shop:category:change", (category) => {
+    this.eventManager.on("shop:category:change", (category, config) => {
       this.stateManager.state.shop.currentCategory = category;
-      this.components.shopPage.render();
+      this.components.shopPage.render(this.stateManager.state.shop, config);
     });
 
     this.eventManager.on("ui:stateplayer:show", (activePage) => {

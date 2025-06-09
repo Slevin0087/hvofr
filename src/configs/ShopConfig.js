@@ -143,6 +143,16 @@ export const ShopConfig = {
     },
   },
 
+  defaultShopState: {
+    currentCategory: "faces",
+    purchasedItems: [],
+    selectedItems: {
+      cardFace: "classic_faces",
+      cardBack: "blue_back",
+      background: "green_felt",
+    },
+  },
+  
   defaultItems: {
     cardFace: "classic_faces",
     cardBack: "blue_back",

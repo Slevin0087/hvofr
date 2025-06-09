@@ -3,13 +3,14 @@
   --padding-shop-head: 1em;
   --translateY-btn: 0.1em;
   --btn-active: #3e8e41;
-  --font-size-shop-350px: 1.1em;
+  --font-size-shop-350px: 1.2em;
   --shopCard-width: calc(var(--card-width) * 2);
   --shopCard-height: calc(var(--shopCard-width) * 1.4);
   --gap-for-items: 0.5em;
   --gap-for-items-head: calc(var(--gap-for-items) / 2);
   --font-size-tbcard-vSh: calc(var(--shopCard-width) / 5);
   --font-size-ccard-vSh: calc(var(--shopCard-width) / 1.7);
+  --item-border: 0.1em;
 }
 
 .shop {
@@ -34,13 +35,16 @@
   background-color: brown;
 }
 
+.balance {
+  font-size: var(--font-size-shop-350px);
+}
 /* .choose-container {
 
 } */
 
 .all-items-container {
   display: flex;
-  gap: 100px;
+  gap: var(--gap-for-flex-shop);
   flex-wrap: wrap;
   color: black;
   width: 100%;
@@ -63,6 +67,9 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-for-items);
+  border: var(--item-border) solid red;
+  border-radius: var(--card-radius);
+  padding: var(--padding-shop-head);
 }
 
 .item-head {
@@ -73,6 +80,7 @@
   align-items: center;
   width: 100%;
   line-height: 1;
+  background-color: #3e8e41;
 }
 
 .item-head h3 {

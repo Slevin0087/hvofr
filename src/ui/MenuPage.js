@@ -51,6 +51,7 @@ export class MenuPage {
 
     this.elements.exitBtn.addEventListener("click", () => {
       this.events.emit("game:exit", this);
+      this.events.emit("game:end");
     });
   }
 

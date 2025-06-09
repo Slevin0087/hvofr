@@ -47,7 +47,7 @@ export class ShopUI {
       // console.log('category:', typeof category);
 
       btn.addEventListener("click", () => {
-        this.events.emit("shop:category:change", category);
+        this.events.emit("shop:category:change", category, ShopConfig);
       });
     });
 
@@ -106,7 +106,8 @@ export class ShopUI {
     });
 
     // Обновляем баланс
-    this.updateBalance(shopState.balance);
+    // this.updateBalance(shopState.balance);
+    this.updateBalance(this.state.state.player.coins);
   }
 
   // <div class="item-container" id="classic-skin">
@@ -200,7 +201,7 @@ export class ShopUI {
   }
 
   setActiveCategory(category) {
-    // console.log("в setActiveCategory:", category);
+    console.log("в setActiveCategory:", category);
 
     // Обновляем кнопки
     Object.values(this.elements.categoryButtons).forEach((btn) => {

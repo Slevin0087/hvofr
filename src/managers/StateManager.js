@@ -1,5 +1,7 @@
 import { Storage } from "../utils/Storage.js";
 import { Validator } from "../utils/Validator.js";
+import { GameConfig } from "../configs/GameConfig.js";
+import { ShopConfig } from "../configs/ShopConfig.js";
 
 export class StateManager {
   constructor(eventManager) {
@@ -21,50 +23,14 @@ export class StateManager {
       ui: {
         activePage: null,
       },
-      game: {
-        isRunning: false,
-        isPaused: false,
-        score: 0,
-        moves: 0,
-        time: 0,
-        lastMove: null,
-        minPossibleMoves: 52, // Теоретический минимум для пасьянса
-        difficulty: "normal",
-      },
+      game: GameConfig.gameState,
       player: {
         name: "Игрок",
         coins: 0,
-        stats: {
-          wins: 0,
-          losses: 0,
-          totalMoves: 0,
-          cardsToFoundation: 0,
-          highestScore: 0,
-          fastestWin: Infinity,
-          gamesPlayed: 0,
-          cardsFlipped: 0,
-          winsWithoutHints: 0,
-        },
+        stats: GameConfig.defaultPlayerStats,
       },
-      settings: {
-        soundEnabled: true,
-        musicVolume: 0.7,
-        effectsVolume: 0.9,
-        theme: "default",
-        language: "ru",
-        cardFace: "classic_faces",
-        cardBack: "blue_back",
-        background: "green_felt",
-      },
-      shop: {
-        currentCategory: "faces",
-        purchasedItems: [],
-        selectedItems: {
-          cardFace: "classic_faces",
-          cardBack: "blue_back",
-          background: "green_felt",
-        },
-      },
+      settings: GameConfig.defaultSettings,
+      shop: ShopConfig.defaultShopState,
       achievements: {
         unlocked: [],
       },
@@ -74,19 +40,23 @@ export class StateManager {
   loadAllData() {
     // Загрузка сохраненных данных
     const savedState = this.storage.loadGameState();
+    console.log('savedState:', savedState);
+    console.log('aaaaaaaaaaaaaaaaaaaaa', this.state);
     if (savedState && this.validator.isGameStateValid(savedState)) {
-      this.state = {
-        ...this.getInitialState(),
+      
+      this.state.game = {
+        ...this.state.game,
         ...savedState,
       };
     }
+    console.log('ffffffffffffffffff', this.state);
 
     // Загрузка статистики
-    const savedStats = this.storage.loadPlayerStats();
-    if (savedStats) {
+    const savedPlayerStats = this.storage.loadPlayerStats();
+    if (savedPlayerStats) {
       this.state.player.stats = {
         ...this.state.player.stats,
-        ...savedStats,
+        ...savedPlayerStats,
       };
     }
 
@@ -106,6 +76,7 @@ export class StateManager {
   }
 
   setupEventListeners() {
+
     this.events.on("game:start", () => {
       this.state.game.isRunning = true;
       this.state.player.stats.gamesPlayed++;
@@ -166,11 +137,11 @@ export class StateManager {
     this.events.emit("player:coins:updated", this.state.player.coins);
   }
 
-  unlockAchievement(achievementId) {
+  addUnlockAchievement(achievementId) {
     if (this.state.achievements.unlocked.includes(achievementId)) return;
 
     this.state.achievements.unlocked.push(achievementId);
-    this.storage.unlockAchievement(achievementId);
+    this.storage.addUnlockAchievement(achievementId);
     this.events.emit("achievement:unlocked", achievementId);
   }
 

@@ -3,7 +3,7 @@ import { GameConfig } from "../configs/GameConfig.js";
 export class Storage {
   constructor() {
     this.defaultSettings = GameConfig.defaultSettings;
-    this.defaultStats = {
+    this.defaultPlayerStats = {
       wins: 0,
       losses: 0,
       totalMoves: 0,
@@ -48,9 +48,9 @@ export class Storage {
   loadPlayerStats() {
     try {
       const stats = JSON.parse(localStorage.getItem("playerStats"));
-      return { ...this.defaultStats, ...stats };
+      return { ...this.defaultPlayerStats, ...stats };
     } catch {
-      return { ...this.defaultStats };
+      return { ...this.defaultPlayerStats };
     }
   }
 
@@ -68,7 +68,7 @@ export class Storage {
   }
 
   // === Shop & Inventory ===
-  purchaseItem(itemId) {
+  addPurchasedItem(itemId) {
     const purchased = this.getPurchasedItems();
     if (!purchased.includes(itemId)) {
       purchased.push(itemId);
@@ -155,36 +155,8 @@ export class Storage {
     return JSON.parse(localStorage.getItem("shopItems")) || defaultItems;
   }
 
-  //   // изночально было
-  //   getPurchasedItems() {
-  //     return JSON.parse(localStorage.getItem("purchasedItems")) || [];
-  //   }
-
-  addPurchasedItem(itemId) {
-    const purchased = this.getPurchasedItems();
-    if (!purchased.includes(itemId)) {
-      purchased.push(itemId);
-      localStorage.setItem("purchasedItems", JSON.stringify(purchased));
-    }
-  }
-
-  //   // изночально было
-  //   getUnlockedAchievements() {
-  //     return JSON.parse(localStorage.getItem("unlockedAchievements")) || [];
-  //   }
-
-  //   // изночально было
-  //   unlockAchievement(achievementId) {
-  //     const unlocked = this.getUnlockedAchievements();
-  //     if (!unlocked.includes(achievementId)) {
-  //       unlocked.push(achievementId);
-  //       localStorage.setItem("unlockedAchievements", JSON.stringify(unlocked));
-  //     }
-  //   }
-
   // === Achievements ===
-  // потом
-  unlockAchievement(achievementId) {
+  addUnlockAchievement(achievementId) {
     const unlocked = this.getUnlockedAchievements();
     if (!unlocked.includes(achievementId)) {
       unlocked.push(achievementId);
@@ -197,7 +169,6 @@ export class Storage {
     }
   }
 
-  // потом
   getUnlockedAchievements() {
     try {
       return JSON.parse(localStorage.getItem("unlockedAchievements")) || [];
@@ -206,18 +177,18 @@ export class Storage {
     }
   }
 
-  getPlayerStats() {
-    const defaultStats = {
-      wins: 0,
-      losses: 0,
-      totalMoves: 0,
-      highestScore: 0,
-      fastestWin: Infinity,
-      totalTimePlayed: 0,
-    };
+  // getPlayerStats() {
+  //   const defaultPlayerStats = {
+  //     wins: 0,
+  //     losses: 0,
+  //     totalMoves: 0,
+  //     highestScore: 0,
+  //     fastestWin: Infinity,
+  //     totalTimePlayed: 0,
+  //   };
 
-    return JSON.parse(localStorage.getItem("playerStats")) || defaultStats;
-  }
+  //   return JSON.parse(localStorage.getItem("playerStats")) || defaultPlayerStats;
+  // }
 
   // === Settings ===
   saveGameSettings(settings) {
@@ -235,16 +206,11 @@ export class Storage {
     localStorage.setItem("playerData", JSON.stringify(playerData));
   }
 
-  //   // изночально. нужен ли????????????????????????????????????????
-  //   savePlayerStats(stats) {
-  //     localStorage.setItem("playerStats", JSON.stringify(stats));
-  //   }
-
   // === Stats ===
   // изночально было savePlayerStats(stats)???????????????????????????????
   savePlayerStats(stats) {
     const mergedStats = {
-      ...this.defaultStats,
+      ...this.defaultPlayerStats,
       ...stats,
     };
     localStorage.setItem("playerStats", JSON.stringify(mergedStats));
