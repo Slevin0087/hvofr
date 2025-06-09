@@ -1,0 +1,151 @@
+export const ShopConfig = {
+  categories: {
+    cardFaces: {
+      id: "cardFaces",
+      name: "Лица карт",
+      icon: "♠️",
+      enabled: true,
+    },
+    cardBacks: {
+      id: "cardBacks",
+      name: "Рубашки",
+      icon: "🃏",
+      enabled: true,
+    },
+    backgrounds: {
+      id: "backgrounds",
+      name: "Фоны",
+      icon: "🎨",
+      enabled: true,
+    },
+    specialEffects: {
+      id: "specialEffects",
+      name: "Эффекты",
+      icon: "✨",
+      enabled: false, // Будет добавлено в будущем
+    },
+  },
+
+  items: [
+    // === Лица карт ===
+    {
+      id: "classic_faces",
+      name: "Классические",
+      type: "faces",
+      category: "cardFace",
+      price: 0,
+      styleClass: "classic-faces",
+      description: "Стандартный дизайн карт",
+      rarity: "common",
+      unlockCondition: null,
+      previewImage: "assets/shop/previews/classic_faces.png",
+    },
+    {
+      id: "vintage_faces",
+      name: "Винтажные",
+      type: "faces",
+      category: "cardFace",
+      price: 250,
+      styleClass: "vintage-faces",
+      description: "Старинный стиль XIX века",
+      rarity: "uncommon",
+      unlockCondition: { wins: 5 },
+      previewImage: "assets/shop/previews/vintage_faces.png",
+    },
+
+    // === Рубашки карт ===
+    {
+      id: "blue_back",
+      name: "Синяя классика",
+      type: "backs",
+      category: "cardBack",
+      price: 100,
+      styleClass: "blue-back",
+      description: "Традиционная синяя рубашка",
+      rarity: "common",
+      unlockCondition: null,
+      previewImage: "assets/shop/previews/blue_back.png",
+    },
+    {
+      id: "red_back",
+      name: "Красная классика",
+      type: "backs",
+      category: "cardBack",
+      price: 100,
+      styleClass: "red-back",
+      description: "Традиционная красная рубашка",
+      rarity: "common",
+      unlockCondition: null,
+      previewImage: "assets/shop/previews/red_back.png",
+    },
+
+    // === Фоны ===
+    {
+      id: "green_felt",
+      name: "Зеленое сукно",
+      type: "backgrounds",
+      category: "background",
+      price: 300,
+      styleClass: "green-felt-bg",
+      description: "Классическое казино",
+      rarity: "rare",
+      unlockCondition: { score: 1000 },
+      previewImage: "assets/shop/previews/green_felt.jpg",
+    },
+    {
+      id: "wooden_table",
+      name: "Деревянный стол",
+      type: "backgrounds",
+      category: "background",
+      price: 500,
+      styleClass: "wooden-table-bg",
+      description: "Уютная домашняя атмосфера",
+      rarity: "epic",
+      unlockCondition: { achievements: ["fast_win"] },
+      previewImage: "assets/shop/previews/wooden_table.jpg",
+    },
+  ],
+
+  currencies: {
+    coins: {
+      name: "Монеты",
+      icon: "🪙",
+      exchangeRate: 1,
+    },
+    gems: {
+      name: "Кристаллы",
+      icon: "💎",
+      exchangeRate: 100,
+      premium: true,
+    },
+  },
+
+  rarities: {
+    common: {
+      name: "Обычный",
+      color: "#a0a0a0",
+    },
+    uncommon: {
+      name: "Необычный",
+      color: "#2ecc71",
+    },
+    rare: {
+      name: "Редкий",
+      color: "#3498db",
+    },
+    epic: {
+      name: "Эпический",
+      color: "#9b59b6",
+    },
+    legendary: {
+      name: "Легендарный",
+      color: "#f1c40f",
+    },
+  },
+
+  defaultItems: {
+    cardFace: "classic_faces",
+    cardBack: "blue_back",
+    background: "default_bg",
+  },
+};

@@ -1,4 +1,5 @@
 import { Animator } from "../utils/Animator.js";
+import { ShopConfig } from "../configs/ShopConfig.js";
 
 export class ShopUI {
   constructor(eventManager, stateManager) {
@@ -43,20 +44,46 @@ export class ShopUI {
     });
 
     Object.entries(this.elements.categoryButtons).forEach(([category, btn]) => {
-        // console.log('category:', typeof category);
-        
+      // console.log('category:', typeof category);
+
       btn.addEventListener("click", () => {
         this.events.emit("shop:category:change", category);
       });
     });
 
-    this.events.on("shop:render", (shopState) => this.render(shopState));
+    // this.events.on("shop:render", (shopState) => this.render(shopState));
+    this.events.on("shop:render", (shopState, config) =>
+      this.render(shopState, config)
+    );
     this.events.on("shop:balance:update", (balance) =>
       this.updateBalance(balance)
     );
   }
 
-  render(shopState = this.state.state.shop) {
+  // render(shopState = this.state.state.shop) {
+  //   console.log("в render:", this.state);
+
+  //   // Очищаем контейнер
+  //   this.elements.itemsContainer.innerHTML = "";
+
+  //   // Устанавливаем активную категорию
+  //   this.setActiveCategory(shopState.currentCategory);
+
+  //   // Рендерим предметы текущей категории
+  //   const items = shopState.items.filter(
+  //     (item) => item.type === this.getTypeForCategory(shopState.currentCategory)
+  //   );
+
+  //   items.forEach((item) => {
+  //     const itemElement = this.createShopItemElement(item);
+  //     this.elements.itemsContainer.appendChild(itemElement);
+  //   });
+
+  //   // Обновляем баланс
+  //   this.updateBalance(shopState.balance);
+  // }
+
+  render(shopState = this.state.state.shop, ShopConfig) {
     console.log("в render:", this.state);
 
     // Очищаем контейнер
@@ -66,11 +93,14 @@ export class ShopUI {
     this.setActiveCategory(shopState.currentCategory);
 
     // Рендерим предметы текущей категории
-    const items = shopState.items.filter(
-      (item) => item.type === this.getTypeForCategory(shopState.currentCategory)
+    const items = ShopConfig.items.filter(
+      (item) =>
+        item.category === this.getTypeForCategory(shopState.currentCategory)
     );
+    console.log("items:", items);
 
     items.forEach((item) => {
+      console.log("dddddddddddddddddddddddddd");
       const itemElement = this.createShopItemElement(item);
       this.elements.itemsContainer.appendChild(itemElement);
     });
@@ -79,21 +109,83 @@ export class ShopUI {
     this.updateBalance(shopState.balance);
   }
 
+  // <div class="item-container" id="classic-skin">
+  //         <p>Классический</p>
+  //         <div class="shop-card-container">
+  //           <div class="item" data-style="classic" id="classic-skin-1">
+  //             <div
+  //               class="shop-card"
+  //               data-suit="♥"
+  //               data-value="A"
+  //               data-color="red"
+  //             >
+  //               <span class="shop-card-top-left value-red">A♥</span>
+  //               <span class="shop-card-center value-red">♥</span>
+  //               <span class="shop-card-bottom-right value-red">A♥</span>
+  //             </div>
+  //           </div>
+  //           <div class="item" data-style="classic" id="classic-skin-2">
+  //             <div
+  //               class="shop-card"
+  //               data-suit="♣"
+  //               data-value="K"
+  //               data-color="black"
+  //             >
+  //               <span class="shop-card-top-left value-black">K♣</span>
+  //               <span class="shop-card-center value-black">♣</span>
+  //               <span class="shop-card-bottom-right value-black">K♣</span>
+  //             </div>
+  //           </div>
+  //         </div>
+  //         <button class="buy-btn" data-style-btn="classic-fup" data-price="0">
+  //           Выбрать
+  //         </button>
+  //       </div>
+
   createShopItemElement(item) {
+    console.log("в createShopItemElement");
+
+    const containerElement = document.createElement("div");
+    containerElement.className = "item-container";
+
     const itemElement = document.createElement("div");
     itemElement.className = `shop-item ${item.owned ? "owned" : ""}`;
     itemElement.innerHTML = `
-            <h3>${item.name}</h3>
-            <div class="item-preview" style="background: ${
-              item.previewStyle
-            }"></div>
-            <p>${item.description}</p>
-            <button class="shop-action-btn" 
-                    data-id="${item.id}" 
-                    data-price="${item.price}">
-                ${item.owned ? "Применить" : `Купить (${item.price})`}
-            </button>
-        `;
+    <div class="item-head">
+      <h3>${item.name}</h3>
+      <div class="item-preview" style="background: ${item.previewStyle}"></div>
+      <p>${item.description}</p>
+    </div>
+    <div class="shop-item-container">
+      <div 
+          class="shop-card"
+          data-suit="♥"
+          data-value="A"
+          data-color="red"
+      >
+        <span class="shop-card-top-left value-red">A♥</span>
+        <span class="shop-card-center value-red">♥</span>
+        <span class="shop-card-bottom-right value-red">A♥</span>
+      </div>
+      <div
+          class="shop-card"
+          data-suit="♣"
+          data-value="K"
+          data-color="black"
+      >
+        <span class="shop-card-top-left value-black">K♣</span>
+        <span class="shop-card-center value-black">♣</span>
+        <span class="shop-card-bottom-right value-black">K♣</span>
+      </div>
+    </div>  
+    <button class="shop-action-btn" 
+    data-id="${item.id}" 
+    data-price="${item.price}">
+    ${item.owned ? "Применить" : `Купить (${item.price})`}
+    </button>
+    `;
+
+    containerElement.appendChild(itemElement);
 
     const button = itemElement.querySelector(".shop-action-btn");
     button.addEventListener("click", () => {
@@ -104,7 +196,7 @@ export class ShopUI {
       }
     });
 
-    return itemElement;
+    return containerElement;
   }
 
   setActiveCategory(category) {
@@ -138,12 +230,12 @@ export class ShopUI {
 
   show() {
     this.page.classList.remove("hidden");
-    Animator.fadeIn(this.page);
+    // Animator.fadeIn(this.page);
   }
 
   hide() {
-    Animator.fadeOut(this.page).then(() => {
-      this.page.classList.add("hidden");
-    });
+    // Animator.fadeOut(this.page).then(() => {
+    this.page.classList.add("hidden");
+    // });
   }
 }

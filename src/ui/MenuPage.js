@@ -54,14 +54,14 @@ export class MenuPage {
     });
   }
 
-  async show(gameInProgress = false) {
+  show(gameInProgress = false) {
     this.elements.continueBtn.style.display = gameInProgress ? "block" : "none";
     this.page.classList.remove("hidden");
-    await Animator.fadeIn(this.page, this.displayPage);
+    // await Animator.fadeIn(this.page, this.displayPage);
   }
 
-  async hide() {
-    await Animator.fadeOut(this.page);
+  hide() {
+    // await Animator.fadeOut(this.page);
     this.page.classList.add("hidden");
   }
 

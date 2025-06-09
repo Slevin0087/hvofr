@@ -4,6 +4,7 @@ import { SettingsPage } from "../ui/SettingsPage.js";
 import { GamePage } from "../ui/GamePage.js";
 import { ShopUI } from "../ui/ShopUI.js";
 import { PlayerStatePage } from "../ui/PlayerStatePage.js";
+import { ShopConfig } from "../configs/ShopConfig.js";
 
 export class UIManager {
   constructor(eventManager, stateManager) {
@@ -80,7 +81,7 @@ export class UIManager {
       this.hideAll(activePage);
       this.components.shopPage.show();
       this.stateManager.state.ui.activePage = this.components.shopPage;
-      this.eventManager.emit("shop:render", this.stateManager.state.shop);
+      this.eventManager.emit("shop:render", this.stateManager.state.shop, ShopConfig);
     });
 
     this.eventManager.on("shop:category:change", (category) => {

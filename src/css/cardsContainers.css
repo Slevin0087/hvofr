@@ -39,6 +39,7 @@
   top: 0;
   left: 0;
   background: rgb(201, 189, 189);
+  cursor: pointer;
 }
 
 .card .top {
@@ -73,6 +74,10 @@
   align-items: flex-end; /* Текст прижимается к низу */
   padding: var(--padding-c); /* Добавляет отступы */
   margin-bottom: 0;
+}
+
+.stock {
+  cursor: pointer;
 }
 
 .stock-span {

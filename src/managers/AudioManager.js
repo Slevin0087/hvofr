@@ -78,6 +78,7 @@ export class AudioManager {
     this.eventManager.on("game:started", () => this.playMusic());
     this.eventManager.on("game:pause", () => this.pauseMusic());
     this.eventManager.on("game:resume", () => this.resumeMusic());
+    this.eventManager.on("game:exit", () => this.stopMusic());
   }
 
   play(name) {

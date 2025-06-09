@@ -7,7 +7,7 @@ export class PlayerStatePage {
     this.page = document.getElementById("player-state");
     this.displayPage = "";
     this.elements = {
-        btnBack: document.getElementById('btn-back-st-player'),
+      btnBack: document.getElementById("btn-back-st-player"),
     };
 
     this.initialize();
@@ -29,13 +29,13 @@ export class PlayerStatePage {
     });
   }
 
-  async show() {
+  show() {
     this.page.classList.remove("hidden");
-    await Animator.fadeIn(this.page, this.displayPage);
+    // await Animator.fadeIn(this.page, this.displayPage);
   }
 
-  async hide() {
-    await Animator.fadeOut(this.page);
+  hide() {
+    // await Animator.fadeOut(this.page);
     this.page.classList.add("hidden");
   }
 }

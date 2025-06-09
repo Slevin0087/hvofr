@@ -16,8 +16,12 @@ export class GameLogicSystem {
 
   setupEventListeners() {
     // this.events.on(GameEvents.CARD_CLICK, (card) => this.handleCardClick(card));
-    this.events.on("card:to:foundation", (data) =>
+    this.events.on("card:to:foundation", (data) => {
+      console.log('data:', data);
+      
       this.moveCardToFoundation(data)
+
+    }
     );
     this.events.on("card:to:tableau", (data) => this.moveCardToTableau(data));
     this.events.on("hint:request", () => this.provideHint());
@@ -25,8 +29,8 @@ export class GameLogicSystem {
   }
 
   setupNewGame(deck, tableaus, stock) {
-    console.log("setupNewGame");
-    console.log("deck, tableaus, stock:", deck, tableaus, stock);
+    // console.log("setupNewGame");
+    // console.log("deck, tableaus, stock:", deck, tableaus, stock);
 
     // deck = new Deck();
     deck.shuffle();
@@ -119,15 +123,18 @@ export class GameLogicSystem {
   // после
   handleCardClick(card) {
     console.log("клик по карте");
-    // console.log("this.state:", this.state);
-    console.log("card:", card);
+    console.log("this.state.cards:", this.state.cards);
+    // console.log("card:", card);
 
     this.audio.play("click");
     if (!card.faceUp || this.state.game.isPaused) return;
 
     // Проверяем можно ли переместить карту в foundation
     for (let i = 0; i < this.state.cards.foundations.length; i++) {
+      console.log('i:', i);
       if (this.state.cards.foundations[i].canAccept(card)) {
+        console.log('essssssssss');
+        
         this.events.emit("card:to:foundation", { card, foundationIndex: i });
         return;
       }
@@ -135,7 +142,7 @@ export class GameLogicSystem {
 
     // Если нет - проверяем tableau
     for (let i = 0; i < this.state.cards.tableaus.length; i++) {
-      console.log('цикл проверки tableau');
+      // console.log('цикл проверки tableau');
       // console.log(this.state.cards);
       
       if (this.state.cards.tableaus[i].canAccept(card)) {
@@ -152,30 +159,37 @@ export class GameLogicSystem {
 
   // Остальные методы системы логики...
   // после
-  moveCardToFoundation({ card, foundationIndex }) {
-    console.log("в moveCardToFoundation:");
+  moveCardToFoundation(data) {
+    const { card, foundationIndex } = data
     const foundation = this.state.cards.foundations[foundationIndex];
+    
     const source = this.getCardSource(card);
-
+    
     if (!foundation.canAccept(card)) {
       this.audio.play("error");
       return;
     }
-
+    console.log('foundationnnnnnnnnnnn:', foundation);
+    
     // Запоминаем ход для возможной отмены
     this.state.updateLastMove({
       card,
       from: source,
       to: `foundation-${foundationIndex}`,
     });
-
-    console.log("this.state:", this.state);
-
+    
+    // console.log("this.state:", this.state);
+    
     // Удаляем карту из исходного места
+    console.log('card, sourcennnnnnnnnnn:', card, source);
     this.removeCardFromSource(card, source);
-
+    
     // Добавляем в foundation
-    foundation.addCard(card);
+    console.log("в moveCardToFoundation foundationIndex:", foundationIndex);
+    // foundation.addCard(card);
+    this.state.cards.foundations[foundationIndex].addCard(card);
+    console.log('this.state.cards.foundationssssssssss:', this.state.cards.foundations);
+    
     this.state.incrementStat("cardsToFoundation");
 
     // Рендер/Обновление карт
@@ -244,7 +258,7 @@ export class GameLogicSystem {
   }
 
   removeCardFromSource(card, source) {
-    console.log("в removeCardFromSource:", source);
+    // console.log("в removeCardFromSource:", source);
 
     if (source.startsWith("tableau")) {
       const index = parseInt(source.split("-")[1]);

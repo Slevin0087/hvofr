@@ -103,16 +103,16 @@ export class NamePage {
     this.state.storage.savePlayerData(playerData);
   }
 
-  async hide() {
+  hide() {
     this.page.classList.add("hidden");
-    await Animator.fadeOut(this.page);
+    // await Animator.fadeOut(this.page);
   }
 
-  async show() {
+  show() {
     // this.events.emit("ui:name:show");
     this.page.classList.remove("hidden");
     this.elements.input.focus();
-    await Animator.fadeIn(this.page, this.displayPage);
+    // await Animator.fadeIn(this.page, this.displayPage);
   }
 
   reset() {

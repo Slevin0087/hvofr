@@ -86,14 +86,14 @@ export class GamePage {
     }, 2000);
   }
 
-  async show() {
+  show() {
     this.page.classList.remove("hidden");
-    await Animator.fadeIn(this.page, this.displayPage);
+    // await Animator.fadeIn(this.page, this.displayPage);
     this.updateUI();
   }
 
-  async hide() {
-    await Animator.fadeOut(this.page);
+  hide() {
+    // await Animator.fadeOut(this.page);
     this.page.classList.add("hidden");
   }
 }

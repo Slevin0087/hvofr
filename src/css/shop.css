@@ -4,6 +4,12 @@
   --translateY-btn: 0.1em;
   --btn-active: #3e8e41;
   --font-size-shop-350px: 1.1em;
+  --shopCard-width: calc(var(--card-width) * 2);
+  --shopCard-height: calc(var(--shopCard-width) * 1.4);
+  --gap-for-items: 0.5em;
+  --gap-for-items-head: calc(var(--gap-for-items) / 2);
+  --font-size-tbcard-vSh: calc(var(--shopCard-width) / 5);
+  --font-size-ccard-vSh: calc(var(--shopCard-width) / 1.7);
 }
 
 .shop {
@@ -14,6 +20,7 @@
   gap: var(--gap-for-flex-shop);
   background-color: chocolate;
   min-height: 100%;
+  overflow-y: auto;
 }
 
 .shop-head {
@@ -27,9 +34,19 @@
   background-color: brown;
 }
 
+/* .choose-container {
+
+} */
+
 .all-items-container {
+  display: flex;
+  gap: 100px;
+  flex-wrap: wrap;
   color: black;
+  width: 100%;
   background-color: coral;
+  padding: var(--padding-shop-head);
+  justify-content: center;
 }
 
 .active-shop-btn {
@@ -40,6 +57,90 @@
 
 .shop-back-btn:active {
   background-color: var(--btn-active);
+}
+
+.item-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-for-items);
+}
+
+.item-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-for-items-head);
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  line-height: 1;
+}
+
+.item-head h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.shop-item-container {
+  display: flex;
+  gap: var(--gap-for-items);
+  width: 100%;
+  justify-content: center;
+}
+
+.shop-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.shop-card {
+  padding: var(--padding-c);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: var(--shopCard-width);
+  height: var(--shopCard-height);
+  border-radius: var(--card-radius);
+  box-sizing: border-box;
+  /* margin: 0px 5px; */
+  background-color: white;
+}
+
+.shop-card-top-left {
+  font-size: var(--font-size-tbcard-vSh);
+  padding: var(--padding-c);
+  margin-top: 0;
+  /* height: max-content; */
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: center;
+}
+
+.shop-card-center {
+  font-size: var(--font-size-ccard-vSh); /* Размер шрифта */
+  line-height: 1; /* Убираем лишний межстрочный интервал */
+  padding: 0; /* Убираем внутренние отступы */
+  margin: 0; /* Убираем внешние отступы */
+  /* display: inline-block; Или просто block, если не нужно inline-поведение */
+  width: 100%; /* Если нужно растянуть на всю ширину */
+  text-align: center; /* Центрируем текст по горизонтали */
+}
+
+.shop-card-bottom-right {
+  font-size: var(--font-size-tbcard-vSh);
+  /* height: max-content; */
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-items: flex-end; /* Текст прижимается к низу */
+  padding: var(--padding-c); /* Добавляет отступы */
+  margin-bottom: 0;
 }
 
 @media (min-width: 350px) {

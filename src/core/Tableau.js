@@ -19,8 +19,6 @@ export class Tableau {
   }
 
   canAccept(card) {
-    console.log('проверяется карта-можно ли в tableau:', card);
-
     if (!card.faceUp) return false;
 
     // Пустой tableau принимает только королей
@@ -36,7 +34,7 @@ export class Tableau {
   }
 
   addCard(card) {
-    console.log('добавляется в tableau:', card);
+    // console.log('добавляется в tableau:', card);
     const position = this.cards.length;
     card.positionData = {
       parent: `tableau-${this.index}`,
@@ -68,7 +66,7 @@ export class Tableau {
   }
 
   removeCard(card) {
-    console.log('удаление карты из tableau:', card);
+    // console.log('удаление карты из tableau:', card);
     const index = this.cards.indexOf(card);
     if (index >= 0) {
       this.cards.splice(index, 1);

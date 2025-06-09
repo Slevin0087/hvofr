@@ -73,40 +73,40 @@ export class RenderingSystem {
   //   this.applyTheme(this.state.state.settings.theme);
   // }
 
-  createFoundations() {
-    this.domElements.foundationsContainer.innerHTML = "";
-    for (let i = 0; i < 4; i++) {
-      const foundation = document.createElement("div");
-      foundation.className = "foundation";
-      foundation.id = `foundation-${i}`;
-      this.domElements.foundationsContainer.appendChild(foundation);
-    }
-  }
+  // createFoundations() {
+  //   this.domElements.foundationsContainer.innerHTML = "";
+  //   for (let i = 0; i < 4; i++) {
+  //     const foundation = document.createElement("div");
+  //     foundation.className = "foundation";
+  //     foundation.id = `foundation-${i}`;
+  //     this.domElements.foundationsContainer.appendChild(foundation);
+  //   }
+  // }
 
-  createTableaus() {
-    this.domElements.tableausContainer.innerHTML = "";
-    for (let i = 0; i < 7; i++) {
-      const tableau = document.createElement("div");
-      tableau.className = "tableau";
-      tableau.id = `tableau-${i}`;
-      this.domElements.tableausContainer.appendChild(tableau);
-    }
-  }
+  // createTableaus() {
+  //   this.domElements.tableausContainer.innerHTML = "";
+  //   for (let i = 0; i < 7; i++) {
+  //     const tableau = document.createElement("div");
+  //     tableau.className = "tableau";
+  //     tableau.id = `tableau-${i}`;
+  //     this.domElements.tableausContainer.appendChild(tableau);
+  //   }
+  // }
 
-  createStockAndWaste() {
-    this.domElements.stockContainer.innerHTML = "";
-    this.domElements.wasteContainer.innerHTML = "";
+  // createStockAndWaste() {
+  //   this.domElements.stockContainer.innerHTML = "";
+  //   this.domElements.wasteContainer.innerHTML = "";
 
-    const stock = document.createElement("div");
-    stock.className = "stock";
-    stock.id = "stock";
-    this.domElements.stockContainer.appendChild(stock);
+  //   const stock = document.createElement("div");
+  //   stock.className = "stock";
+  //   stock.id = "stock";
+  //   this.domElements.stockContainer.appendChild(stock);
 
-    const waste = document.createElement("div");
-    waste.className = "waste";
-    waste.id = "waste";
-    this.domElements.wasteContainer.appendChild(waste);
-  }
+  //   const waste = document.createElement("div");
+  //   waste.className = "waste";
+  //   waste.id = "waste";
+  //   this.domElements.wasteContainer.appendChild(waste);
+  // }
 
   // потом, изначально renderGame
   renderFullGame() {
@@ -166,7 +166,7 @@ export class RenderingSystem {
   }
 
   renderCardsForFoundation() {
-    console.log('в renderCardsForFoundation');
+    console.log('в renderCardsForFoundation:', this.foundations);
     this.foundations.forEach((foundation, i) => {
       if (foundation.cards.length > 0) {
         const card = foundation.cards[foundation.cards.length - 1];
@@ -213,59 +213,59 @@ export class RenderingSystem {
     document.querySelectorAll(".card").forEach((card) => card.remove());
   }
 
-  renderStock() {
-    const stock = this.state.game.stock;
-    const stockElement = this.domElements.stockContainer.firstChild;
+  // renderStock() {
+  //   const stock = this.state.game.stock;
+  //   const stockElement = this.domElements.stockContainer.firstChild;
 
-    if (stock.isEmpty()) {
-      stockElement.classList.add("empty");
-      return;
-    }
+  //   if (stock.isEmpty()) {
+  //     stockElement.classList.add("empty");
+  //     return;
+  //   }
 
-    stockElement.classList.remove("empty");
-    stockElement.className = "stock " + this.state.state.settings.cardBack;
-  }
+  //   stockElement.classList.remove("empty");
+  //   stockElement.className = "stock " + this.state.state.settings.cardBack;
+  // }
 
-  renderWaste() {
-    const waste = this.state.game.stock.getWasteCard();
-    const wasteElement = this.domElements.wasteContainer.firstChild;
-    wasteElement.innerHTML = "";
+  // renderWaste() {
+  //   const waste = this.state.game.stock.getWasteCard();
+  //   const wasteElement = this.domElements.wasteContainer.firstChild;
+  //   wasteElement.innerHTML = "";
 
-    if (!waste) {
-      wasteElement.classList.add("empty");
-      return;
-    }
+  //   if (!waste) {
+  //     wasteElement.classList.add("empty");
+  //     return;
+  //   }
 
-    wasteElement.classList.remove("empty");
-    this.renderCard(waste, "waste");
-  }
+  //   wasteElement.classList.remove("empty");
+  //   this.renderCard(waste, "waste");
+  // }
 
-  renderFoundations() {    
-    this.state.game.foundations.forEach((foundation, index) => {
-      const foundationElement = document.getElementById(`foundation-${index}`);
-      foundationElement.innerHTML = "";
+  // renderFoundations() {  
+  //   this.state.game.foundations.forEach((foundation, index) => {      
+  //     const foundationElement = document.getElementById(`foundation-${index}`);
+  //     foundationElement.innerHTML = "";
 
-      if (foundation.isEmpty()) {
-        foundationElement.classList.add("empty");
-        return;
-      }
+  //     if (foundation.isEmpty()) {
+  //       foundationElement.classList.add("empty");
+  //       return;
+  //     }
 
-      foundationElement.classList.remove("empty");
-      const topCard = foundation.getTopCard();
-      this.renderCard(topCard, `foundation-${index}`);
-    });
-  }
+  //     foundationElement.classList.remove("empty");
+  //     const topCard = foundation.getTopCard();
+  //     this.renderCard(topCard, `foundation-${index}`);
+  //   });
+  // }
 
-  renderTableaus() {
-    this.state.game.tableaus.forEach((tableau, index) => {
-      const tableauElement = document.getElementById(`tableau-${index}`);
-      tableauElement.innerHTML = "";
+  // renderTableaus() {
+  //   this.state.game.tableaus.forEach((tableau, index) => {
+  //     const tableauElement = document.getElementById(`tableau-${index}`);
+  //     tableauElement.innerHTML = "";
 
-      tableau.cards.forEach((card, cardIndex) => {
-        this.renderCard(card, `tableau-${index}`, cardIndex);
-      });
-    });
-  }
+  //     tableau.cards.forEach((card, cardIndex) => {
+  //       this.renderCard(card, `tableau-${index}`, cardIndex);
+  //     });
+  //   });
+  // }
 
   // после
   renderCard(card, containerId, offset = 0) {
@@ -372,7 +372,7 @@ export class RenderingSystem {
   }
 
   animateCardMove({ card, from, to }) {
-    console.log('заход в анимацию');
+    // console.log('заход в анимацию');
     
     const cardElement = card.domElement;
     if (!cardElement) return;

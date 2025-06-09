@@ -68,14 +68,14 @@ export class SettingsPage {
     this.events.emit("settings:save", newSettings);
   }
 
-  async show() {
+  show() {
     this.loadSettings();
     this.page.classList.remove("hidden");
-    await Animator.fadeIn(this.page, this.displayPage);
+    // await Animator.fadeIn(this.page, this.displayPage);
   }
 
-  async hide() {
+  hide() {
     this.page.classList.add("hidden");
-    await Animator.fadeOut(this.page);
+    // await Animator.fadeOut(this.page);
   }
 }

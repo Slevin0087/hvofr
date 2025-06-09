@@ -41,7 +41,8 @@ export class Animator {
     element.style.display = display;
       element.style.transition = `opacity ${duration}ms ease-out`;
 
-      requestAnimationFrame(() => {
+      // requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
         element.style.opacity = "1";
         setTimeout(resolve, duration);
       });
