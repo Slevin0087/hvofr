@@ -41,8 +41,8 @@
 .player-state-content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
@@ -51,7 +51,7 @@
   /* align-items: center; */
   font-size: var(--font-size-s-350px);
   border-collapse: separate; /*Важно! Должно быть 'separate' (по умолчанию)*/
-  border-spacing: var(--gap-for-pstate) 0; /* Горизонтальное, затем вертикальное */
+  border-spacing: calc(var(--gap-for-pstate) * 4) 0; /* Горизонтальное, затем вертикальное */
 }
 
 .right-td {
