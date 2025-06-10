@@ -132,7 +132,7 @@ export class AudioManager {
   }
 
   toggleAllSounds(enabled) {
-    console.log('enabled:', enabled);
+    // console.log('enabled:', enabled);
       
     this.settings.soundEnabled = enabled;
     if (enabled) {
@@ -147,11 +147,11 @@ export class AudioManager {
     
     volume = volume / 100;
     volume = Math.max(0, Math.min(1, volume));
-    console.log('volume:', volume);
+    // console.log('volume:', volume);
     this.settings.musicVolume = volume;
     if (this.backgroundMusic) {
       this.backgroundMusic.volume = volume;
-      console.log('this.backgroundMusic.volume:', this.backgroundMusic.volume);
+      // console.log('this.backgroundMusic.volume:', this.backgroundMusic.volume);
     }
     // this.saveSettings();
   }

@@ -32,11 +32,17 @@
   gap: var(--gap-for-flex-shop);
   width: 100%;
   color: black;
-  background-color: brown;
+  background-color: rgb(155, 60, 112);
+}
+
+.shop-head h2 {
+  margin: 0;
+  padding: 0;
 }
 
 .balance {
   font-size: var(--font-size-shop-350px);
+  color: yellow;
 }
 /* .choose-container {
 

@@ -37,7 +37,7 @@
   gap: var(--gap-for-flex-settings);
   width: 100%;
   color: black;
-  background-color: brown;
+  background-color: rgb(155, 60, 112);
   padding: var(--padding-setting-head);
 }
 
