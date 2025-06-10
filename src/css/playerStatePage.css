@@ -5,6 +5,7 @@
   --padding-psate-head: 0.5em;
   --btn-pstate-left-bottom: 1em;
   --font-size-ps-350px: 1.3em;
+  --padding-table: 1em;
 }
 
 .player-state {
@@ -35,6 +36,30 @@
   color: black;
   background-color: rgb(155, 60, 112);
   padding: var(--padding-psate-head);
+}
+
+.player-state-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.p-state-table {
+  /* padding: 0 calc(var(--padding-table) - var(--gap-for-pstate)); */
+  /* align-items: center; */
+  font-size: var(--font-size-s-350px);
+  border-collapse: separate; /*Важно! Должно быть 'separate' (по умолчанию)*/
+  border-spacing: var(--gap-for-pstate) 0; /* Горизонтальное, затем вертикальное */
+}
+
+.right-td {
+  color: red;
+}
+
+.left-td {
+  color: yellow;
 }
 
 @media (min-width: 350px) {

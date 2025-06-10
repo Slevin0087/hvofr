@@ -29,8 +29,38 @@ export class PlayerStatePage {
     });
   }
 
+  render() {
+    const statePlayer = this.state.state.player;
+    console.log('statePlayer:', statePlayer);
+    
+    const container = document.getElementById('player-state-content');
+    container.innerHTML = '';
+    container.innerHTML = `<table class="p-state-table table">
+      <tr>
+        <td class="left-td">Имя:</td>
+        <td class="right-td">${statePlayer.name}</td>
+      </tr>
+      <tr>
+        <td class="left-td">Монеты:</td>
+        <td class="right-td">${statePlayer.coins}</td>
+      </tr>
+      <tr>
+        <td class="left-td">Сыграно игр:</td>
+        <td class="right-td">${statePlayer.gamesPlayed}</td>
+      </tr>
+      <tr>
+        <td class="left-td">Выиграно игр:</td>
+        <td class="right-td">${statePlayer.wins}</td>
+      </tr>
+      <tr>
+        <td class="left-td">Лучший счет:</td>
+        <td class="right-td">${statePlayer.highestScore}</td>
+      </tr>`;
+  }
+
   show() {
     this.page.classList.remove("hidden");
+    this.render();
     // await Animator.fadeIn(this.page, this.displayPage);
   }
 
