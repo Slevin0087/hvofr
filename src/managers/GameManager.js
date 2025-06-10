@@ -5,7 +5,6 @@ export class GameManager {
     this.state = stateManager;
     this.events = eventManager;
     this.audio = audioManager;
-    this.game = new Game(this.state, this.events, this.audio);
     this.lastTime = 0;
     this.initialize();
   }
@@ -17,13 +16,15 @@ export class GameManager {
 
   setupEventListeners() {
     this.events.on("game:restart", () => {
-      this.state.currentGame = this.game;
+      console.log('this.state.currentGame ДО:', this.state.currentGame);
+      
+      this.state.currentGame = new Game(this.state, this.events, this.audio);
+      console.log('new Game(this.state, this.events, this.audio) ПОСЛЕ:', this.state.currentGame);
       this.state.currentGame.init();
     })
     
-    this.events.on("game:new", () => {
-      console.log('в обработчик this.audio', this.audio);
-      this.state.currentGame = this.game;
+    this.events.on("game:start", () => {
+      this.state.currentGame = new Game(this.state, this.events, this.audio);
       this.state.currentGame.init();
     });
 

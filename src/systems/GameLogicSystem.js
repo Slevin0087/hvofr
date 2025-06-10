@@ -17,18 +17,15 @@ export class GameLogicSystem {
   }
 
   setupEventListeners() {
-    // this.events.on(GameEvents.CARD_CLICK, (card) => this.handleCardClick(card));
-    this.events.on("card:to:foundation", (data) => {
-      console.log("data:", data);
-
-      this.moveCardToFoundation(data);
-    });
+    this.events.on("card:to:foundation", (data) => this.moveCardToFoundation(data));
     this.events.on("card:to:tableau", (data) => this.moveCardToTableau(data));
     this.events.on("hint:request", () => this.provideHint());
     this.events.on("game:undo", () => this.handleUndo());
   }
 
   setupNewGame(deck, tableaus, stock) {
+    console.log('deck, tableaus, stock:', deck, tableaus, stock);
+    
     // console.log("setupNewGame");
     // console.log("deck, tableaus, stock:", deck, tableaus, stock);
 
@@ -39,6 +36,8 @@ export class GameLogicSystem {
     for (let i = 0; i < 7; i++) {
       for (let j = 0; j <= i; j++) {
         const card = deck.deal();
+        console.log('card:', card);
+        
         card.faceUp = j === i;
         card.indexTableau = i;
         tableaus[i].addCard(card);

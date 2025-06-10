@@ -29,7 +29,7 @@ export class MenuPage {
 
   setupEventListeners() {
     this.elements.newGameBtn.addEventListener("click", () => {
-      this.events.emit("game:new");
+      this.events.emit("game:start");
       // this.events.emit("game:start");
     });
 

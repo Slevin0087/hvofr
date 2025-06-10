@@ -49,11 +49,10 @@ export class UIManager {
       this.stateManager.state.ui.activePage = this.components.menuPage;
     });
 
-    this.eventManager.on("game:new", () => {
+    this.eventManager.on("game:start", () => {
       this.hideAll(this.components.menuPage);
-      this.components.gamePage.show();
       this.stateManager.state.ui.activePage = this.components.gamePage;
-      this.stateManager.state.game.isRunning = true;
+      this.components.gamePage.show();
     });
 
     this.eventManager.on("game:restart", () => {

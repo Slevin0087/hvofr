@@ -28,13 +28,14 @@ export class Foundation {
     // Если фундамент пустой, принимаем только тузы
     if (this.isEmpty()) {
       if (card.value !== "A") return false;
-      this.suit = card.suit;
+      // this.suit = card.suit;
       return true;
     }
 
     // Проверяем последовательность и масть
     const topCard = this.getTopCard();
-    return card.suit === this.suit && card.getRank() === topCard.getRank() + 1;
+    // return card.suit === this.suit && card.getRank() === topCard.getRank() + 1;
+    return card.suit === topCard.suit && card.getRank() === topCard.getRank() + 1;
   }
 
   addCard(card) {

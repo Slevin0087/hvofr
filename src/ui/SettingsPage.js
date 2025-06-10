@@ -3,7 +3,8 @@ import { Animator } from "../utils/Animator.js";
 export class SettingsPage {
   constructor(eventManager, stateManager) {
     this.events = eventManager;
-    this.state = stateManager;
+    this.stateManager = stateManager;
+    this.state = this.stateManager.state;
     this.page = document.getElementById("settings");
     this.displayPage = "";
     this.elements = {
@@ -48,7 +49,7 @@ export class SettingsPage {
 
   render() {
     
-    const settings = this.state.state.settings;
+    const settings = this.state.settings;
     
     this.elements.soundToggle.checked = settings.soundEnabled;
     this.elements.difficultySelect.value = settings.difficulty;
@@ -66,7 +67,7 @@ export class SettingsPage {
   }
   
   show() {
-    console.log("loaaaaaaaaaaaaaaaaaad", this.state.state.settings);
+    console.log("loaaaaaaaaaaaaaaaaaad", this.state.settings);
     this.render();
     this.page.classList.remove("hidden");
     // await Animator.fadeIn(this.page, this.displayPage);

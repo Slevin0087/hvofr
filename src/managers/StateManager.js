@@ -106,13 +106,18 @@ export class StateManager {
     this.events.on("game:start", () => {
       this.state.game.isRunning = true;
       this.state.player.gamesPlayed++;
-      this.saveGameState();
+      // this.saveGameState();
     });
 
     this.events.on("game:restart", () => {
       this.resetScore(0);
       this.resetTime(0);
     });
+
+    this.events.on("settings:difficulty:change", (value) => {
+      this.state.settings.difficulty = value;
+      this.storage.saveGameSettings(this.state.settings);
+    })
 
     this.events.on("game:end", () => {
       this.state.game.isRunning = false;

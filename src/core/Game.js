@@ -16,7 +16,9 @@ export class Game {
 
     this.deck = new Deck();
     this.foundations = Array.from({ length: 4 }, (_, i) => new Foundation(i));
+    console.log('this.tableaus ДО:', this.tableaus);
     this.tableaus = Array.from({ length: 7 }, (_, i) => new Tableau(i));
+    console.log('this.tableaus ПОСЛЕ:', this.tableaus);
     this.stock = new Stock();
 
     this.systems = {
@@ -61,6 +63,8 @@ export class Game {
   }
 
   setupEventListeners() {
+    // this.events.on("game:restart", () => this.restart())
+
     this.events.on("card:clicked", (card) =>
       this.systems.logic.handleCardClick(card)
     );
