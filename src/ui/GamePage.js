@@ -2,15 +2,16 @@ import { Animator } from "../utils/Animator.js";
 
 export class GamePage {
   constructor(eventManager, stateManager) {
+    this.stateManager = stateManager;
     this.events = eventManager;
-    this.state = stateManager;
+    this.state = stateManager.state;
     this.page = document.getElementById("game-interface");
     this.displayPage = "";
     this.elements = {
       messageEl: document.getElementById("message"),
       scoreEl: document.getElementById("points-in-game"),
       timeEl: document.getElementById("time-display"),
-      newGameBtn: document.getElementById("new-game-ctr-btn"),
+      restartGameBtn: document.getElementById("new-game-ctr-btn"),
       hintBtn: document.getElementById("hint"),
       menuBtn: document.getElementById("menu-btn"),
       collectBtn: document.getElementById("collect-cards"),
@@ -20,6 +21,8 @@ export class GamePage {
   }
 
   initialize() {
+    console.log('ИНИЦИАЛИЗАЦИЯ GamePage');
+    
     this.getDisplayPage();
     this.setupEventListeners();
     this.updateUI();
@@ -31,8 +34,9 @@ export class GamePage {
   }
 
   setupEventListeners() {
-    this.elements.newGameBtn.addEventListener("click", () => {
-      this.events.emit("game:new");
+    this.elements.restartGameBtn.addEventListener("click", () => {
+      this.events.emit("game:restart");
+
     });
 
     this.elements.hintBtn.addEventListener("click", () => {
@@ -58,14 +62,30 @@ export class GamePage {
     this.events.on("game:message", (message, type) => {
       this.showMessage(message, type);
     });
+
+    this.events.on("game:score:updated", (score) => this.updateScore(score));
   }
 
   updateUI() {
-    this.updateScore(this.state.state.game.score);
-    this.updateTime(this.state.state.game.playTime);
+    this.updateScore(this.state.game.score);
+    this.updateTime(this.state.game.playTime);
+  }
+
+  resetScore(score) {
+    
+    
+    this.elements.scoreEl.textContent = `🌟 ${score}`;
+  }
+
+  resetTime(minutes, seconds) {
+    console.log('resetTime(minutes):', minutes);
+    console.log('resetTime(seconds):', seconds);
+    this.elements.timeEl.textContent = `${minutes}${minutes}:${seconds}${seconds}`;
   }
 
   updateScore(score) {
+    console.log("score:", score);
+
     this.elements.scoreEl.textContent = `🌟 ${score}`;
   }
 

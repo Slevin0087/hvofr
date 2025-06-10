@@ -75,18 +75,18 @@ export class ShopSystem {
   applyItem(item) {
     switch (item.type) {
       case "cardFace":
-        this.state.gameSettings.cardFaceStyle = item.styleClass;
+        this.state.state.settings.cardFaceStyle = item.styleClass;
         break;
       case "cardBack":
-        this.state.gameSettings.cardBackStyle = item.styleClass;
+        this.state.state.settings.cardBackStyle = item.styleClass;
         break;
       case "background":
-        this.state.gameSettings.backgroundImage = item.imageUrl;
+        this.state.state.settings.backgroundImage = item.imageUrl;
         break;
     }
 
-    this.storage.saveGameSettings(this.state.gameSettings);
-    this.events.emit("game:settings:update", this.state.gameSettings);
+    this.storage.saveGameSettings(this.state.state.settings);
+    this.events.emit("game:settings:update", this.state.state.settings);
   }
 
   changeCategory(category) {

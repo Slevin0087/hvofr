@@ -4,10 +4,11 @@ export const GameConfig = {
     isPaused: false,
     score: 0,
     moves: 0,
-    time: 0,
+    playTime: 0,
     lastMove: null,
     minPossibleMoves: 52, // Теоретический минимум для пасьянса
     difficulty: "normal",
+    faceDownCards: 28,
   },
 
   rules: {

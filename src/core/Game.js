@@ -9,7 +9,8 @@ import { CardSystem } from "../systems/CardSystem.js";
 
 export class Game {
   constructor(stateManager, eventManager, audioManager) {
-    this.state = stateManager;
+    this.stateManager = stateManager;
+    this.state = stateManager.state;
     this.events = eventManager;
     this.audio = audioManager;
 
@@ -19,10 +20,10 @@ export class Game {
     this.stock = new Stock();
 
     this.systems = {
-      cards: new CardSystem(this.state, this.events),
-      logic: new GameLogicSystem(this.state, this.events, this.audio),
-      render: new RenderingSystem(this.state, this.events, this.stock, this.foundations, this.tableaus),
-      animation: new AnimationSystem(this.state, this.events),
+      cards: new CardSystem(this.stateManager, this.events),
+      logic: new GameLogicSystem(this.stateManager, this.events, this.audio),
+      render: new RenderingSystem(this.stateManager, this.events, this.stock, this.foundations, this.tableaus),
+      animation: new AnimationSystem(this.stateManager, this.events),
     };
 
 
@@ -37,19 +38,21 @@ export class Game {
       this.foundations,
       this.stock
     );
-    this.initCards();
+    // this.initCards();
+    console.log('this.state:', this.state);
     this.state.game.isRunning = true;
     this.events.emit("game:started");
+    
   }
 
-  initCards() {
-    this.state.cards = {
-      deck: this.deck,
-      foundations: this.foundations,
-      tableaus: this.tableaus,
-      stock: this.stock,
-    }
-  }
+  // initCards() {
+  //   this.state.cards = {
+  //     deck: this.deck,
+  //     foundations: this.foundations,
+  //     tableaus: this.tableaus,
+  //     stock: this.stock,
+  //   }
+  // }
 
   restart() {
     this.systems.logic.clearGame();
@@ -85,7 +88,9 @@ export class Game {
   }
 
   update(deltaTime) {
+    
     if (this.state.game.isRunning) {
+      // console.log('this.state.game:', this.state.game);
       this.state.game.playTime += deltaTime;
       this.events.emit("game:time:update", this.state.game.playTime);
     }

@@ -4,7 +4,8 @@ import { Animator } from "../utils/Animator.js";
 export class NamePage {
   constructor(eventManager, stateManager) {
     this.events = eventManager;
-    this.state = stateManager;
+    this.stateManager = stateManager;
+    this.state = this.stateManager.state;
     this.page = document.getElementById("player-page");
     this.displayPage = "";
     this.elements = {
@@ -21,8 +22,7 @@ export class NamePage {
   init() {
     this.getDisplayPage();
     this.setupEventListeners();
-    this.setFocusInput();
-    // this.loadSavedName();
+    this.setNameInInput();
     // console.log("this.displayPage:", this.displayPage);
   }
 
@@ -38,13 +38,11 @@ export class NamePage {
 
     // this.events.on("ui:name:show", () => this.show());
     // this.events.on("ui:name:hide", () => this.hide());
-    this.events.on("player:name:set", (n) => this.saveName(n));
   }
+  
 
-  setFocusInput() {
-    console.log('this.state.state:', this.state.state);
-    
-    this.elements.input.value = this.state.state.player.name;
+  setNameInInput() {
+    this.elements.input.value = this.state.player.name;
   }
   // loadSavedName() {
   //   const savedName = this.state.storage.loadPlayerData();
@@ -53,21 +51,15 @@ export class NamePage {
   // }
 
   handleSubmit(event) {
-    // console.log("в handleSubmit");
-
     event.preventDefault();
     const formData = new FormData(event.target);
     const name = formData.get("player_name").trim();
-    // if (!this.validateName(name)) return;
     this.events.emit("player:name:set", name);
     this.events.emit("ui:name:hide");
   }
 
   handleSkip() {
-    // console.log("в handleSkip");
-
-    const defaultName = "Игрок";
-    this.events.emit("player:name:set", defaultName);
+    this.events.emit("player:name:set", this.state.player.name);
     this.events.emit("ui:name:hide");
   }
 
@@ -102,10 +94,10 @@ export class NamePage {
   }
 
   saveName(name) {
-    this.state.state.player.name = name;
+    this.state.player.name = name;
     // const playerData = this.state.storage.loadPlayerData();
     // playerData.name = name;
-    this.state.storage.savePlayerStats(this.state.state.player);
+    this.stateManager.storage.savePlayerStats(this.state.player);
   }
 
   hide() {

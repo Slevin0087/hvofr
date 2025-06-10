@@ -28,8 +28,8 @@ export class Storage {
   loadPlayerStats(stats) {
     try {
       const playerStats = JSON.parse(localStorage.getItem("playerStats"));
-      console.log('playerStatssssssssssss:', playerStats);
-      
+      console.log("playerStatssssssssssss:", playerStats);
+
       return { ...stats, ...playerStats };
     } catch {
       return { ...stats };
@@ -87,6 +87,80 @@ export class Storage {
   deductCoins(amount) {
     const current = this.getCoins();
     localStorage.setItem("gameCoins", Math.max(0, current - amount));
+  }
+
+  getGameState() {
+    try {
+      const defaultState = {
+        isRunning: false,
+        isPaused: false,
+        score: 0,
+        moves: 0,
+        playTime: 0,
+        lastMove: null,
+        minPossibleMoves: 52, // Теоретический минимум для пасьянса
+        difficulty: "normal",
+        faceDownCards: 28,
+      };
+      const state = JSON.parse(localStorage.getItem("gameState"));
+      return state || defaultState;
+    } catch (e) {
+      console.error("Error loading game state:", e);
+      return null;
+    }
+  }
+
+  getPlayerState() {
+    const defaultState = {
+      name: "Игрок",
+      coins: 0,
+      wins: 0,
+      losses: 0,
+      totalMoves: 0,
+      cardsToFoundation: 0,
+      highestScore: 0,
+      fastestWin: Infinity,
+      gamesPlayed: 0,
+      cardsFlipped: 0,
+      winsWithoutHints: 0,
+    };
+    const state = parseInt(localStorage.getItem("playerStats"));
+    return state || defaultState;
+  }
+
+  getGameSettings() {
+    try {
+      const defaultState = {
+        soundEnabled: true,
+        theme: "default",
+        language: "ru",
+        musicVolume: 20,
+        effectsVolume: 0.9,
+        difficulty: "normal",
+        cardFaceStyle: "classic",
+        cardBackStyle: "blue",
+        backgroundStyle: "default",
+      };
+      const gameSettings = JSON.parse(localStorage.getItem("gameSettings"));
+      return gameSettings || defaultState;
+    } catch (e) {
+      console.error("Error loading game settings:", e);
+      return null;
+    }
+  }
+
+  getShopState() {
+    const defaultState = {
+      currentCategory: "faces",
+      purchasedItems: [],
+      selectedItems: {
+        cardFace: "classic_faces",
+        cardBack: "blue_back",
+        background: "green_felt",
+      },
+    };
+    const state = parseInt(localStorage.getItem("shopStats"));
+    return state || defaultState;
   }
 
   getCoins() {
@@ -170,19 +244,6 @@ export class Storage {
     }
   }
 
-  // getPlayerStats() {
-  //   const defaultPlayerStats = {
-  //     wins: 0,
-  //     losses: 0,
-  //     totalMoves: 0,
-  //     highestScore: 0,
-  //     fastestWin: Infinity,
-  //     totalTimePlayed: 0,
-  //   };
-
-  //   return JSON.parse(localStorage.getItem("playerStats")) || defaultPlayerStats;
-  // }
-
   // === Settings ===
   saveGameSettings(settings) {
     const storage = JSON.parse(localStorage.getItem("gameSettings"));
@@ -193,25 +254,12 @@ export class Storage {
     localStorage.setItem("gameSettings", JSON.stringify(settingsState));
   }
 
-  // === Player Data ===
-  savePlayerData(name) {
-    console.log('name:', name);
-    
-    // console.log("playerData:", playerData);
-    const playerStats = JSON.parse(localStorage.getItem("playerStats"));
-    console.log('playerStats:', playerStats);
-    
-    localStorage.setItem("playerData", JSON.stringify(playerData));
-  }
-
-  // === Stats ===
-  // изночально было savePlayerStats(stats)???????????????????????????????
-  savePlayerStats(stats) {    
-    const storage = JSON.parse(localStorage.getItem("playerStats"));    
+  savePlayerStats(stats) {
+    const storage = JSON.parse(localStorage.getItem("playerStats"));
     const playerStats = {
       ...storage,
       ...stats,
-    };    
+    };
     localStorage.setItem("playerStats", JSON.stringify(playerStats));
   }
 }

@@ -2,7 +2,7 @@ import { EventManager } from "./managers/EventManager.js";
 import { StateManager } from "./managers/StateManager.js";
 import { UIManager } from "./managers/UIManager.js";
 import { AudioManager } from "./managers/AudioManager.js";
-import { Game } from "./core/Game.js";
+// import { Game } from "./core/Game.js";
 import { GameManager } from "./managers/GameManager.js";
 
 const volumeSlider = document.getElementById("music-volume");
@@ -20,11 +20,11 @@ class App {
     this.uiManager = new UIManager(this.eventManager, this.stateManager);
     this.audioManager = new AudioManager(this.eventManager);
     this.gameManager = new GameManager(this.stateManager, this.eventManager, this.audioManager);
-    this.game = new Game(
-      this.stateManager,
-      this.eventManager,
-      this.audioManager
-    );
+    // this.game = new Game(
+    //   this.stateManager,
+    //   this.eventManager,
+    //   this.audioManager
+    // );
 
     this.init();
   }
@@ -37,9 +37,9 @@ class App {
   }
 
   setupEventListeners() {
-    this.eventManager.on("game:new", () => {
+    // this.eventManager.on("game:new", () => {
       
-    })
+    // })
   }
 
 

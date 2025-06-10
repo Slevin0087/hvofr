@@ -1,9 +1,11 @@
 import { GameEvents } from "../utils/Constants.js";
 import { Game } from "../core/Game.js";
+import { GameConfig } from "../configs/GameConfig.js";
 
 export class GameLogicSystem {
   constructor(stateManager, eventManager, audioManager) {
-    this.state = stateManager;
+    this.stateManager = stateManager;
+    this.state = stateManager.state;
     this.events = eventManager;
     this.audio = audioManager;
 
@@ -17,12 +19,10 @@ export class GameLogicSystem {
   setupEventListeners() {
     // this.events.on(GameEvents.CARD_CLICK, (card) => this.handleCardClick(card));
     this.events.on("card:to:foundation", (data) => {
-      console.log('data:', data);
-      
-      this.moveCardToFoundation(data)
+      console.log("data:", data);
 
-    }
-    );
+      this.moveCardToFoundation(data);
+    });
     this.events.on("card:to:tableau", (data) => this.moveCardToTableau(data));
     this.events.on("hint:request", () => this.provideHint());
     this.events.on("game:undo", () => this.handleUndo());
@@ -52,14 +52,18 @@ export class GameLogicSystem {
     }
     stock.addCards(stockCards);
 
+    console.log('this.state:', this.state);
+    console.log('this.stateManager:', this.stateManager);
+    
+    
     // Сброс состояния игры
-    this.state.game = {
-      score: 0,
-      moves: 0,
-      playTime: 0,
-      isRunning: true,
-      faceDownCards: 28, // 7 рядов по (n) карт
-    };
+    console.log('Сброс состояния игры');
+    
+    this.state.game.score = GameConfig.gefaultGameState.score;
+    this.state.game.moves = GameConfig.gefaultGameState.moves;
+    this.state.game.playTime = GameConfig.gefaultGameState.playTime;
+    this.state.game.isRunning = GameConfig.gefaultGameState.isRunning;
+    this.state.game.faceDownCards = GameConfig.gefaultGameState.faceDownCards;
   }
 
   // изначально
@@ -123,31 +127,31 @@ export class GameLogicSystem {
   // после
   handleCardClick(card) {
     console.log("клик по карте");
-    console.log("this.state.cards:", this.state.cards);
+    console.log("this.state.currentGame:", this.stateManager.currentGame);
     // console.log("card:", card);
 
     this.audio.play("click");
     if (!card.faceUp || this.state.game.isPaused) return;
 
     // Проверяем можно ли переместить карту в foundation
-    for (let i = 0; i < this.state.cards.foundations.length; i++) {
-      console.log('i:', i);
-      if (this.state.cards.foundations[i].canAccept(card)) {
-        console.log('essssssssss');
-        
+    for (let i = 0; i < this.stateManager.currentGame.foundations.length; i++) {
+      console.log("i:", i);
+      if (this.stateManager.currentGame.foundations[i].canAccept(card)) {
+        console.log("essssssssss");
+
         this.events.emit("card:to:foundation", { card, foundationIndex: i });
         return;
       }
     }
 
     // Если нет - проверяем tableau
-    for (let i = 0; i < this.state.cards.tableaus.length; i++) {
+    for (let i = 0; i < this.stateManager.currentGame.tableaus.length; i++) {
       // console.log('цикл проверки tableau');
-      // console.log(this.state.cards);
-      
-      if (this.state.cards.tableaus[i].canAccept(card)) {
-        console.log('if');
-        
+      // console.log(this.stateManager.currentGame);
+
+      if (this.stateManager.currentGame.tableaus[i].canAccept(card)) {
+        console.log("if");
+
         this.events.emit("card:to:tableau", { card, tableauIndex: i });
         return;
       }
@@ -160,44 +164,52 @@ export class GameLogicSystem {
   // Остальные методы системы логики...
   // после
   moveCardToFoundation(data) {
-    const { card, foundationIndex } = data
-    const foundation = this.state.cards.foundations[foundationIndex];
-    
+    const { card, foundationIndex } = data;
+    const foundation = this.stateManager.currentGame.foundations[foundationIndex];
+
     const source = this.getCardSource(card);
-    
+
     if (!foundation.canAccept(card)) {
       this.audio.play("error");
       return;
     }
-    console.log('foundationnnnnnnnnnnn:', foundation);
-    
+    console.log("foundationnnnnnnnnnnn:", foundation);
+
     // Запоминаем ход для возможной отмены
-    this.state.updateLastMove({
+    this.stateManager.updateLastMove({
       card,
       from: source,
       to: `foundation-${foundationIndex}`,
     });
-    
+
     // console.log("this.state:", this.state);
-    
+
     // Удаляем карту из исходного места
-    console.log('card, sourcennnnnnnnnnn:', card, source);
+    console.log("card, sourcennnnnnnnnnn:", card, source);
     this.removeCardFromSource(card, source);
-    
+
     // Добавляем в foundation
     console.log("в moveCardToFoundation foundationIndex:", foundationIndex);
     // foundation.addCard(card);
-    this.state.cards.foundations[foundationIndex].addCard(card);
-    console.log('this.state.cards.foundationssssssssss:', this.state.cards.foundations);
-    
-    this.state.incrementStat("cardsToFoundation");
+    this.stateManager.currentGame.foundations[foundationIndex].addCard(card);
+    console.log(
+      "this.stateManager.currentGame.foundationssssssssss:",
+      this.stateManager.currentGame.foundations
+    );
+
+    this.stateManager.incrementStat("cardsToFoundation");
 
     // Рендер/Обновление карт
     this.events.emit("card:moved");
 
     // Обновляем очки
+    console.log(
+      "до обновления очков в state this.state.game:",
+      this.state.game
+    );
+
     const points = this.calculatePoints("toFoundation");
-    this.state.updateScore(points);
+    this.stateManager.updateScore(points);
 
     // Проверяем победу
     if (this.checkWinCondition()) {
@@ -213,7 +225,7 @@ export class GameLogicSystem {
   }
 
   moveCardToTableau({ card, tableauIndex }) {
-    const tableau = this.state.cards.tableaus[tableauIndex];
+    const tableau = this.stateManager.currentGame.tableaus[tableauIndex];
     const source = this.getCardSource(card);
 
     if (!tableau.canAccept(card)) {
@@ -223,7 +235,7 @@ export class GameLogicSystem {
     }
 
     // Запоминаем ход для возможной отмены
-    this.state.updateLastMove({
+    this.stateManager.updateLastMove({
       card,
       from: source,
       to: `tableau-${tableauIndex}`,
@@ -240,7 +252,7 @@ export class GameLogicSystem {
 
     // Обновляем очки
     const points = this.calculatePoints("toTableau");
-    this.state.updateScore(points);
+    this.stateManager.updateScore(points);
 
     this.audio.play("cardPlace");
     this.events.emit("game:move:completed");
@@ -262,12 +274,12 @@ export class GameLogicSystem {
 
     if (source.startsWith("tableau")) {
       const index = parseInt(source.split("-")[1]);
-      this.state.cards.tableaus[index].removeCard(card);
+      this.stateManager.currentGame.tableaus[index].removeCard(card);
     } else if (source.startsWith("foundation")) {
       const index = parseInt(source.split("-")[1]);
-      this.state.cards.foundations[index].removeTopCard();
+      this.stateManager.currentGame.foundations[index].removeTopCard();
     } else if (source === "waste") {
-      this.state.cards.stock.takeFromWaste();
+      this.stateManager.currentGame.stock.takeFromWaste();
     }
   }
 
@@ -275,19 +287,20 @@ export class GameLogicSystem {
     if (!source.startsWith("tableau")) return;
 
     const index = parseInt(source.split("-")[1]);
-    const tableau = this.state.cards.tableaus[index];
+    const tableau = this.stateManager.currentGame.tableaus[index];
     const topCard = tableau.getTopCard();
 
     if (topCard && !topCard.faceUp) {
       topCard.flip();
-      this.state.incrementStat("cardsFlipped");
-      this.state.updateScore(this.calculatePoints("cardFlip"));
+      this.stateManager.incrementStat("cardsFlipped");
+      this.stateManager.updateScore(this.calculatePoints("cardFlip"));
       this.audio.play("cardFlip");
     }
   }
 
   calculatePoints(action) {
     const { difficulty } = this.state.game;
+    console.log("ВВВВВВВВ calculatePoints difficulty:", difficulty);
     const basePoints = {
       toFoundation: 10,
       toTableau: 5,
@@ -305,21 +318,21 @@ export class GameLogicSystem {
   }
 
   checkWinCondition() {
-    return this.state.cards.foundations.every((f) => f.isComplete());
+    return this.stateManager.currentGame.foundations.every((f) => f.isComplete());
   }
 
   handleWin() {
-    this.state.incrementStat("wins");
-    this.state.updateScore(this.calculatePoints("winBonus"));
+    this.stateManager.incrementStat("wins");
+    this.stateManager.updateScore(this.calculatePoints("winBonus"));
 
     // Проверяем победу без подсказок
     if (this.state.game.hintsUsed === 0) {
-      this.state.incrementStat("winsWithoutHints");
+      this.stateManager.incrementStat("winsWithoutHints");
     }
 
     // Проверяем быструю победу
-    if (this.state.game.time < this.state.player.stats.fastestWin) {
-      this.state.player.stats.fastestWin = this.state.game.time;
+    if (this.state.game.time < this.state.player.fastestWin) {
+      this.state.player.fastestWin = this.state.game.time;
     }
 
     this.audio.play("win");
@@ -340,7 +353,7 @@ export class GameLogicSystem {
     const hint = this.findBestHint();
 
     if (hint) {
-      this.state.deductCoins(5);
+      this.stateManager.deductCoins(5);
       this.state.game.hintsUsed = (this.state.game.hintsUsed || 0) + 1;
       this.events.emit("hint:show", hint);
     } else {
@@ -350,11 +363,11 @@ export class GameLogicSystem {
 
   findBestHint() {
     // Сначала проверяем карты в waste
-    const wasteCard = this.state.cards.stock.getWasteCard();
+    const wasteCard = this.stateManager.currentGame.stock.getWasteCard();
     if (wasteCard) {
       // Проверяем foundation
-      for (let i = 0; i < this.state.cards.foundations.length; i++) {
-        if (this.state.cards.foundations[i].canAccept(wasteCard)) {
+      for (let i = 0; i < this.stateManager.currentGame.foundations.length; i++) {
+        if (this.stateManager.currentGame.foundations[i].canAccept(wasteCard)) {
           return {
             card: wasteCard,
             target: `foundation-${i}`,
@@ -364,8 +377,8 @@ export class GameLogicSystem {
       }
 
       // Проверяем tableau
-      for (let i = 0; i < this.state.cards.tableaus.length; i++) {
-        if (this.state.cards.tableaus[i].canAccept(wasteCard)) {
+      for (let i = 0; i < this.stateManager.currentGame.tableaus.length; i++) {
+        if (this.stateManager.currentGame.tableaus[i].canAccept(wasteCard)) {
           return {
             card: wasteCard,
             target: `tableau-${i}`,
@@ -376,15 +389,15 @@ export class GameLogicSystem {
     }
 
     // Затем проверяем tableau
-    for (let i = 0; i < this.state.cards.tableaus.length; i++) {
-      const tableau = this.state.cards.tableaus[i];
+    for (let i = 0; i < this.stateManager.currentGame.tableaus.length; i++) {
+      const tableau = this.stateManager.currentGame.tableaus[i];
       const topCard = tableau.getTopCard();
 
       if (!topCard) continue;
 
       // Проверяем foundation
-      for (let j = 0; j < this.state.cards.foundations.length; j++) {
-        if (this.state.cards.foundations[j].canAccept(topCard)) {
+      for (let j = 0; j < this.stateManager.currentGame.foundations.length; j++) {
+        if (this.stateManager.currentGame.foundations[j].canAccept(topCard)) {
           return {
             card: topCard,
             target: `foundation-${j}`,

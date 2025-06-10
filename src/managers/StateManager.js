@@ -1,7 +1,5 @@
 import { Storage } from "../utils/Storage.js";
 import { Validator } from "../utils/Validator.js";
-import { GameConfig } from "../configs/GameConfig.js";
-import { PlayerConfig } from "../configs/PlayerConfig.js";
 import { ShopConfig } from "../configs/ShopConfig.js";
 import { UIConfig } from "../configs/UIConfig.js";
 
@@ -26,10 +24,10 @@ export class StateManager {
       ui: {
         activePage: UIConfig.activePage,
       },
-      game: GameConfig.gefaultGameState,
-      player: PlayerConfig.defaultPlayerStats,
-      settings: GameConfig.defaultSettings,
-      shop: ShopConfig.defaultShopState,
+      game: this.storage.getGameState(),
+      player: this.storage.getPlayerState(),
+      settings: this.storage.getGameSettings(),
+      shop: this.storage.getShopState(),
       achievements: {
         unlocked: [],
       },
@@ -100,10 +98,20 @@ export class StateManager {
   }
 
   setupEventListeners() {
+    this.events.on("player:name:set", (name) => {
+      this.state.player.name = name;
+      this.storage.savePlayerStats(this.state.player);
+    });
+
     this.events.on("game:start", () => {
       this.state.game.isRunning = true;
-      this.state.player.stats.gamesPlayed++;
+      this.state.player.gamesPlayed++;
       this.saveGameState();
+    });
+
+    this.events.on("game:restart", () => {
+      this.resetScore(0);
+      this.resetTime(0);
     });
 
     this.events.on("game:end", () => {
@@ -133,6 +141,14 @@ export class StateManager {
       this.state.settings.musicVolume = value;
       this.saveGameSettings();
     });
+  }
+
+  resetScore(score) {
+    this.state.game.score = score;
+  }
+
+  resetTime(time) {
+    this.state.game.playTime = time;
   }
 
   addCoins(amount) {
@@ -178,16 +194,20 @@ export class StateManager {
   }
 
   updateScore(points) {
+    // console.log('points:', points);
+
     this.state.game.score += points;
-    if (this.state.game.score > this.state.player.stats.highestScore) {
-      this.state.player.stats.highestScore = this.state.game.score;
+    if (this.state.game.score > this.state.player.highestScore) {
+      this.state.player.highestScore = this.state.game.score;
     }
+    console.log("this.state.game:", this.state.game);
+
     this.events.emit("game:score:updated", this.state.game.score);
   }
 
   incrementStat(statName, amount = 1) {
-    if (this.state.player.stats[statName] !== undefined) {
-      this.state.player.stats[statName] += amount;
+    if (this.state.player[statName] !== undefined) {
+      this.state.player[statName] += amount;
     }
   }
 

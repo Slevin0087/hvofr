@@ -5,6 +5,8 @@ import { GamePage } from "../ui/GamePage.js";
 import { ShopUI } from "../ui/ShopUI.js";
 import { PlayerStatePage } from "../ui/PlayerStatePage.js";
 import { ShopConfig } from "../configs/ShopConfig.js";
+import { GameManager } from "./GameManager.js";
+import { GameConfig } from "../configs/GameConfig.js";
 
 export class UIManager {
   constructor(eventManager, stateManager) {
@@ -18,8 +20,8 @@ export class UIManager {
   init() {
     this.registerComponents();
     this.hideAll();
-    document.getElementById('loader').classList.add('hidden'),
-    this.setupEventListeners();
+    document.getElementById("loader").classList.add("hidden"),
+      this.setupEventListeners();
   }
 
   registerComponents() {
@@ -29,7 +31,10 @@ export class UIManager {
       settingsPage: new SettingsPage(this.eventManager, this.stateManager),
       gamePage: new GamePage(this.eventManager, this.stateManager),
       shopPage: new ShopUI(this.eventManager, this.stateManager),
-      playerStatePage: new PlayerStatePage(this.eventManager, this.stateManager),
+      playerStatePage: new PlayerStatePage(
+        this.eventManager,
+        this.stateManager
+      ),
     };
   }
 
@@ -49,6 +54,14 @@ export class UIManager {
       this.components.gamePage.show();
       this.stateManager.state.ui.activePage = this.components.gamePage;
       this.stateManager.state.game.isRunning = true;
+    });
+
+    this.eventManager.on("game:restart", () => {
+      
+      const config = GameConfig.gefaultGameState;
+      console.log('В СОБИТИИ UIManager GameConfig.gefaultGameState:', GameConfig.gefaultGameState);
+      this.components.gamePage.resetScore(0);
+      this.components.gamePage.resetTime(0, 0);
     });
 
     this.eventManager.on("ui:menu:show", (activePage) => {
@@ -82,7 +95,11 @@ export class UIManager {
       this.hideAll(activePage);
       this.components.shopPage.show();
       this.stateManager.state.ui.activePage = this.components.shopPage;
-      this.eventManager.emit("shop:render", this.stateManager.state.shop, ShopConfig);
+      this.eventManager.emit(
+        "shop:render",
+        this.stateManager.state.shop,
+        ShopConfig
+      );
     });
 
     this.eventManager.on("shop:category:change", (category, config) => {
