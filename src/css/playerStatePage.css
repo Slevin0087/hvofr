@@ -55,11 +55,11 @@
 }
 
 .right-td {
-  color: red;
+  color: yellow;
 }
 
 .left-td {
-  color: yellow;
+  color: black;
 }
 
 @media (min-width: 350px) {
